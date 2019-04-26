@@ -18,8 +18,8 @@ from ruby:2.6
 label maintainer="Jon Leech <devrel@oddhack.org>"
 
 # Install standard Debian packages
-run apt update -qq
-run apt install -y -qq \
+# TODO add --no-install-recommends
+run apt-get update -qq && apt-get install -y -qq \
         bison  \
         build-essential \
         cmake \
@@ -43,7 +43,8 @@ run apt install -y -qq \
         python3-pytest \
         python3-termcolor \
         ruby \
-        ttf-lyx
+        ttf-lyx && \
+        apt-get clean
 
 # Force-install an older version of i18n so the 1.5.2 version, which
 # won't work with ruby 2.1, doesn't abort the CI job when installing
@@ -53,7 +54,7 @@ run gem install asciidoctor asciidoctor-mathematical coderay json-schema
 
 # Install chunked index generation scripts and add lunr to node searchpath
 run curl -sL https://deb.nodesource.com/setup_8.x | bash -
-run apt install -y nodejs
+run apt-get update -qq && apt-get install -y nodejs && apt-get clean
 run npm install -g lunr@2.3.6
 env NODE_PATH /usr/lib/node_modules
 
@@ -67,8 +68,9 @@ run (cd $HOME/common-lisp && git clone https://github.com/wshito/asciidoctor-chu
 
 # Ensure the proper locale is installed and used - not present in ruby image
 # See https://serverfault.com/questions/54591/how-to-install-change-locale-on-debian#54597
-run apt install -y -qq locales
-run sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen
-run locale-gen
+run apt-get install -y -qq locales && \
+    sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen && \
+    locale-gen && \
+    apt-get clean
 env LANG en_US.UTF-8
 
