@@ -40,7 +40,6 @@ RUN apt-get update -qq && \
     python3-pip \
     python3-setuptools \
     python3-wheel \
-    python3-jinja2 \
     wget && \
     apt-get clean
 # Basic gems
@@ -86,6 +85,7 @@ RUN apt-get update -qq && \
     python3-pillow \
     python3-pytest \
     python3-tabulate \
+    python3-jinja2 \
     trang \
     wget \
     xmlstarlet
