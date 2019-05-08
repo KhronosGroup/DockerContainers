@@ -1,0 +1,60 @@
+# Copyright (c) 2019 The Khronos Group Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# This is a Docker container for OpenXR SDK CI builds.
+# Intended for CI or interactive use.
+
+FROM ubuntu:16.04
+LABEL maintainer="Ryan Pavlik <ryan.pavlik@collabora.com>"
+
+ENV LANG C.UTF-8
+
+# Runtime-required packages
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y -qq \
+    build-essential \
+    cmake \
+    git \
+    libgl1-mesa-dev \
+    libvulkan-dev \
+    libx11-xcb-dev \
+    libxcb-dri2-0-dev \
+    libxcb-glx0-dev \
+    libxcb-icccm4-dev \
+    libxcb-keysyms1-dev \
+    libxcb-randr0-dev \
+    libxml2-utils \
+    libxrandr-dev \
+    libxxf86vm-dev \
+    mesa-common-dev \
+    ninja-build \
+    pkg-config \
+    python3 \
+    python3-jinja2 \
+    python3-lxml \
+    python3-networkx \
+    python3-pillow \
+    python3-pytest \
+    python3-tabulate \
+    wget \
+    && apt-get clean
+
+COPY release-codename.py /usr/bin/release-codename.py
+
+RUN release-codename.py | tee /codename
+
+# Install clang-format-5.0
+RUN echo "deb http://apt.llvm.org/$(cat /codename)/ llvm-toolchain-$(cat /codename)-5.0 main" >> /etc/apt/sources.list.d/llvm.list && \
+    wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
+    apt-get update -qq && apt-get install --no-install-recommends -y -qq clang-format-5.0 && apt-get clean
