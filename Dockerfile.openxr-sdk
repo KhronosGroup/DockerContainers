@@ -26,8 +26,10 @@ RUN apt-get update -qq && \
     build-essential \
     cmake \
     git \
+    libegl1-mesa-dev \
     libgl1-mesa-dev \
     libvulkan-dev \
+    libwayland-dev \
     libx11-xcb-dev \
     libxcb-dri2-0-dev \
     libxcb-glx0-dev \
@@ -47,6 +49,7 @@ RUN apt-get update -qq && \
     python3-pillow \
     python3-pytest \
     python3-tabulate \
+    wayland-protocols \
     wget \
     && apt-get clean
 
