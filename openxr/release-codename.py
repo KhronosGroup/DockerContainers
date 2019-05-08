@@ -23,7 +23,7 @@ def isDesired(d):
 result = subprocess.run(['apt-cache', 'policy'], stdout=subprocess.PIPE)
 
 # Extract the "release" lines
-release_lines = (x for x in result.stdout.decode(encoding='utf-8').split('\n') if "release" in x)
+release_lines = (x for x in result.stdout.decode(encoding='utf-8').split('\n') if "release" in x and "updates" not in x)
 
 # Turn into dictionaries and filter
 entries = (lineToDict(line) for line in release_lines)
