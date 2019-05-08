@@ -90,7 +90,11 @@ RUN apt-get update -qq && \
     wget \
     xmlstarlet
 
-# Get clang-format-5.0
-RUN echo "deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-5.0 main" >> /etc/apt/sources.list.d/llvm.list
-RUN wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
-RUN apt-get update -qq && apt-get install --no-install-recommends -y -qq clang-format-5.0 && apt-get clean
+COPY release-codename.py /usr/bin/release-codename.py
+
+RUN release-codename.py | tee /codename
+
+# Install clang-format-5.0
+RUN echo "deb http://apt.llvm.org/$(cat /codename)/ llvm-toolchain-$(cat /codename)-5.0 main" >> /etc/apt/sources.list.d/llvm.list && \
+    wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
+    apt-get update -qq && apt-get install --no-install-recommends -y -qq clang-format-5.0 && apt-get clean
