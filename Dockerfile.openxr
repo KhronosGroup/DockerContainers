@@ -47,6 +47,8 @@ RUN gem install rake asciidoctor coderay json-schema
 RUN MATHEMATICAL_SKIP_STRDUP=1 gem install asciidoctor-mathematical
 RUN gem install --pre asciidoctor-pdf
 
+# Basic pip package
+RUN pip3 install codespell
 # pdf-diff pip package
 RUN pip3 install git+https://github.com/JoshData/pdf-diff
 
@@ -96,7 +98,3 @@ RUN release-codename.py | tee /codename
 RUN echo "deb http://apt.llvm.org/$(cat /codename)/ llvm-toolchain-$(cat /codename)-5.0 main" >> /etc/apt/sources.list.d/llvm.list && \
     wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     apt-get update -qq && apt-get install --no-install-recommends -y -qq clang-format-5.0 && apt-get clean
-
-# Basic pip package, install from Git for bleeding-edge wordlist updates
-#RUN pip3 install git+https://github.com/codespell-project/codespell
-RUN pip3 install codespell
