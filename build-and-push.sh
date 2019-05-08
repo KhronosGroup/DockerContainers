@@ -1,6 +1,8 @@
 #!/bin/sh
 # SPDX-License-Identifier: Apache-2.0
 
+set -e
+
 buildAndPush() {
     docker build . -t "$1"
     docker push "$1"
@@ -10,7 +12,10 @@ buildAndPush() {
     buildAndPush khronosgroup/docker-images
     (
         cd openxr
-        # buildAndPush khronosgroup/openxr-spec-build
-        buildAndPush rpavlik/khr-specbuilder
+        buildAndPush khronosgroup/docker-images:openxr
+    )
+    (
+        cd openxr-sdk
+        buildAndPush khronosgroup/docker-images:openxr-sdk
     )
 )
