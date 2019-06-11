@@ -50,7 +50,7 @@ RUN gem install --pre asciidoctor-pdf
 # Basic pip packages
 RUN pip3 install codespell pypdf2 attrs
 # pdf-diff pip package
-RUN pip3 install git+https://github.com/JoshData/pdf-diff
+RUN pip3 install git+https://github.com/rpavlik/pdf-diff
 
 # ImageMagick font config file - assuming the minimal install is why this didn't happen automatically
 # RUN wget http://www.imagemagick.org/Usage/scripts/imagick_type_gen && \
