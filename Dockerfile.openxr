@@ -53,8 +53,11 @@ RUN pip3 install codespell pypdf2 attrs
 RUN pip3 install git+https://github.com/JoshData/pdf-diff
 
 # ImageMagick font config file - assuming the minimal install is why this didn't happen automatically
-RUN wget http://www.imagemagick.org/Usage/scripts/imagick_type_gen && \
-    mkdir -p ~/.magick && \
+# RUN wget http://www.imagemagick.org/Usage/scripts/imagick_type_gen && \
+#     mkdir -p ~/.magick && \
+#     find /usr/share/fonts/ -name '*.ttf' | perl imagick_type_gen -f - > ~/.magick/type.xml
+COPY imagick_type_gen /
+RUN mkdir -p ~/.magick && \
     find /usr/share/fonts/ -name '*.ttf' | perl imagick_type_gen -f - > ~/.magick/type.xml
 
 # Second stage: start a simpler image that doesn't have the dev packages
