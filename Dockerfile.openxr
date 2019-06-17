@@ -122,12 +122,6 @@ RUN apt-get update -qq && \
 COPY release-codename.py /usr/bin/release-codename.py
 RUN set -e && release-codename.py | tee /codename
 
-# TODO remove these temporary lines
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y -qq \
-    nano && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 # Install clang-format-5.0
 RUN echo "deb http://apt.llvm.org/$(cat /codename)/ llvm-toolchain-$(cat /codename)-5.0 main" >> /etc/apt/sources.list.d/llvm.list && \
