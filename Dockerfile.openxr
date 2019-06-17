@@ -87,6 +87,7 @@ FROM ruby:2.3
 
 # Copy the generated font list
 COPY --from=builder /root/.magick/type.xml /root/.magick/type.xml
+COPY --from=builder /root/.magick /etc/skel/.magick
 # Copy locally-installed gems and python packages
 COPY --from=builder /usr/local/ /usr/local/
 
