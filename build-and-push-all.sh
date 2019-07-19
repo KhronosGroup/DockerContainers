@@ -8,4 +8,5 @@ set -e
     ./build-and-push-one.sh Dockerfile "$@"
     ./build-and-push-one.sh Dockerfile.openxr "$@"
     ./build-and-push-one.sh Dockerfile.openxr-sdk "$@"
+    ./build-and-push-one.sh Dockerfile.openxr-pregenerated-sdk "$@"
 )
