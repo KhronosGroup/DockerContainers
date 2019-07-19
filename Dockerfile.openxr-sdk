@@ -20,6 +20,9 @@ LABEL maintainer="Ryan Pavlik <ryan.pavlik@collabora.com>"
 
 ENV LANG C.UTF-8
 
+# Enable i386 multiarch
+RUN dpkg --add-architecture i386
+
 # Runtime-required packages
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y -qq \
@@ -51,6 +54,20 @@ RUN apt-get update -qq && \
     python3-tabulate \
     wayland-protocols \
     wget \
+    gcc-multilib \
+    g++-multilib \
+    linux-libc-dev:i386 \
+    libgl1-mesa-dev:i386 \
+    libvulkan-dev:i386 \
+    libx11-xcb-dev:i386 \
+    libxcb-dri2-0-dev:i386 \
+    libxcb-glx0-dev:i386 \
+    libxcb-icccm4-dev:i386 \
+    libxcb-keysyms1-dev:i386 \
+    libxcb-randr0-dev:i386 \
+    libxrandr-dev:i386 \
+    libxxf86vm-dev:i386 \
+    mesa-common-dev:i386 \
     && apt-get clean
 
 # Don't delete /var/lib/apt/lists/ before this command!
