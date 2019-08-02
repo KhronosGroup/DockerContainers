@@ -33,4 +33,10 @@ if [ "${CONTAINER_CWD}" ]; then
     cd ${CONTAINER_CWD}
 fi
 
-exec gosu $USER_GROUP bash
+# Default to 'bash' if no arguments are provided
+args="$@"
+if [ -z "$args" ]; then
+  args="bash"
+fi
+
+exec gosu $USER_GROUP $args
