@@ -19,10 +19,6 @@ jobs:
         parameters:
           tag: openxr-sdk
 
-  - job: "OpenXR_Pregenerated_SDK"
-    pool:
-      vmImage: "ubuntu-latest"
-    steps:
       - template: build-template.yml
         parameters:
           tag: openxr-pregenerated-sdk-base
@@ -32,6 +28,8 @@ jobs:
           tag: openxr-pregenerated-sdk
 
   # This image build is broken right now: E: Package 'ttf-lyx' has no installation candidate
+  # When this is re-enabled, also re-enable the "dependsOn:" and the push step for this container
+  # in the "Push" job below.
   # - job: "Vulkan"
   #   pool:
   #     vmImage: "ubuntu-latest"
@@ -45,7 +43,6 @@ jobs:
     dependsOn:
       - OpenXR_Spec
       - OpenXR_SDK
-      - OpenXR_Pregenerated_SDK
       # - Vulkan
     pool:
       vmImage: "ubuntu-latest"
