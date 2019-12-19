@@ -1,0 +1,45 @@
+# "step re-use" template to do something with Docker to every image.
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops
+
+parameters:
+  command: build
+
+steps:
+  # OpenXR spec builder
+  - script: docker pull ruby:2.3
+    displayName: Pull ruby:2.3 base image
+
+  - template: build-template.yml
+    parameters:
+      command: ${{ parameters.command }}
+      tag: openxr-base
+
+  - template: build-template.yml
+    parameters:
+      command: ${{ parameters.command }}
+      tag: openxr
+
+  # OpenXR SDK builder
+  - script: docker pull ubuntu:16.04
+    displayName: Pull ubuntu:16.04 base image
+
+  - template: build-template.yml
+    parameters:
+      command: ${{ parameters.command }}
+      tag: openxr-sdk
+
+  - template: build-template.yml
+    parameters:
+      command: ${{ parameters.command }}
+      tag: openxr-pregenerated-sdk-base
+
+  - template: build-template.yml
+    parameters:
+      command: ${{ parameters.command }}
+      tag: openxr-pregenerated-sdk
+
+  # This image build is broken right now: E: Package 'ttf-lyx' has no installation candidate
+  # - template: build-template.yml
+  #   parameters:
+  #     command: ${{ parameters.command }}
+  #     tag: latest

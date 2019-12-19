@@ -1,3 +1,7 @@
+# "step re-use" template to execute a docker command step in this repo with minimum params,
+# based on the structure of this repo.
+# See <https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/docker?view=azure-devops>
+
 parameters:
   imageName: "khronosgroup/docker-images"
   tag:
