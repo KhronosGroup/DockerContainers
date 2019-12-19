@@ -1,90 +1,28 @@
+# Main azure-pipelines config file
+
 jobs:
-  - job: "OpenXR_Spec"
+  # "build" job - run on all branches
+  - job: build
     pool:
       vmImage: "ubuntu-latest"
     steps:
-      - script: docker pull ruby:2.3
-        displayName: Pull base image
-
-      - template: build-template.yml
+      - template: all-images.yml
         parameters:
-          tag: openxr-base
+          command: build
 
-      - template: build-template.yml
-        parameters:
-          tag: openxr
-
-  - job: "OpenXR_SDK"
-    pool:
-      vmImage: "ubuntu-latest"
-    steps:
-      - script: docker pull ubuntu:16.04
-        displayName: Pull base image
-
-      - template: build-template.yml
-        parameters:
-          tag: openxr-sdk
-
-      - template: build-template.yml
-        parameters:
-          tag: openxr-pregenerated-sdk-base
-
-      - template: build-template.yml
-        parameters:
-          tag: openxr-pregenerated-sdk
-
-  # This image build is broken right now: E: Package 'ttf-lyx' has no installation candidate
-  # When this is re-enabled, also re-enable the "dependsOn:" and the push step for this container
-  # in the "Push" job below.
-  # - job: "Vulkan"
-  #   pool:
-  #     vmImage: "ubuntu-latest"
-  #   steps:
-  #     - template: build-template.yml
-  #       parameters:
-  #         tag: latest
-
-  - job: "Push"
+  # push job - runs only on master
+  - job: build_and_push
     condition: eq(variables['build.sourceBranch'], 'refs/heads/master')
-    dependsOn:
-      - OpenXR_Spec
-      - OpenXR_SDK
-      # - Vulkan
     pool:
       vmImage: "ubuntu-latest"
     steps:
+
       - task: Docker@2
         displayName: Login to Docker Hub
         inputs:
           command: login
-          containerRegistry: "Docker Hub as rpavlik"
-
-      - template: build-template.yml
+          containerRegistry: docker-hub
+      
+      - template: all-images.yml
         parameters:
-          command: push
-          tag: openxr-base
-
-      - template: build-template.yml
-        parameters:
-          command: push
-          tag: openxr
-
-      - template: build-template.yml
-        parameters:
-          command: push
-          tag: openxr-sdk
-
-      - template: build-template.yml
-        parameters:
-          command: push
-          tag: openxr-pregenerated-sdk-base
-
-      - template: build-template.yml
-        parameters:
-          command: push
-          tag: openxr-pregenerated-sdk
-
-      # - template: build-template.yml
-      #   parameters:
-      #     command: push
-      #     tag: latest
+          command: buildAndPush
