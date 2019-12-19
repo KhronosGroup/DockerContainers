@@ -1,0 +1,13 @@
+parameters:
+  imageName: "khronosgroup/docker-images"
+  tag:
+  command: build
+
+steps:
+  - task: Docker@2
+    displayName: ${{ parameters.command }} ${{ parameters.tag }}
+    inputs:
+      repository: ${{ parameters.imageName }}
+      command: ${{ parameters.command }}
+      tags: ${{ parameters.tag }}
+      Dockerfile: Dockerfile.${{ parameters.tag }}
