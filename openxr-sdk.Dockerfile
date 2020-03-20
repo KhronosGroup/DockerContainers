@@ -99,3 +99,6 @@ RUN echo "deb https://apt.llvm.org/$(cat /codename)/ llvm-toolchain-$(cat /coden
     apt-get update -qq && apt-get install -f && apt-get install --no-install-recommends -y -qq clang-format-6.0 clang-6.0 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Copy in the toolchain file
+COPY i386.cmake /i386.cmake
