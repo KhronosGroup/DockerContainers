@@ -6,7 +6,6 @@ Khronos documentation and software.
 Images built from this repo are pushed to https://hub.docker.com/r/khronosgroup/docker-images -
 Each Dockerfile corresponds to a tag, where the extension of the Dockerfile (e.g., `openxr`, `openxr-sdk`)
 matches the name of the tag.
-(The Dockerfile with no extension corresponds to the `latest` tag.)
 
 ## Scripts
 

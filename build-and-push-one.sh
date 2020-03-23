@@ -3,7 +3,6 @@
 
 # Pass a dockerfile name.
 # The dockerfile's extension is used as the tag within the repo.
-# For the default dockerfile with no extension, the tag is "latest"
 
 set -e
 
