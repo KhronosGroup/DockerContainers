@@ -1,4 +1,4 @@
-# Copyright (c) 2019 The Khronos Group Inc.
+# Copyright (c) 2019-2020 The Khronos Group Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,12 +14,16 @@
 
 # This is a Docker container for Vulkan specification builds
 
-from ruby:2.6
+from ruby:2.7
 label maintainer="Jon Leech <devrel@oddhack.org>"
 
-# Install standard Debian packages
-# TODO add --no-install-recommends
-run apt-get update -qq && apt-get install -y -qq \
+# This adds the Node.js repository to the apt registry
+# nodejs is actually installed in the next step
+run curl -sL https://deb.nodesource.com/setup_12.x | bash -
+
+# Install required Debian packages
+run apt-get update -qq && \
+    apt-get install -y -qq --no-install-recommends \
         bison  \
         build-essential \
         cmake \
@@ -29,6 +33,7 @@ run apt-get update -qq && apt-get install -y -qq \
         gcc \
         ghostscript \
         git \
+        gosu \
         g++ \
         jing \
         libcairo2-dev \
@@ -37,34 +42,35 @@ run apt-get update -qq && apt-get install -y -qq \
         libpango1.0-dev \
         libreadline-dev \
         libxml2-dev \
+        nodejs \
         pdftk \
         poppler-utils \
         python3 \
         python3-pytest \
         python3-termcolor \
-        ruby \
-        ttf-lyx && \
-        apt-get clean
-
-# Force-install an older version of i18n so the 1.5.2 version, which
-# won't work with ruby 2.1, doesn't abort the CI job when installing
-# other gems which need it.
-run gem install i18n -v 1.5.1
-run gem install asciidoctor asciidoctor-mathematical coderay json-schema
+        tcsh && \
+    apt-get clean && \
+    gem install \
+        asciidoctor \
+        asciidoctor-diagram \
+        asciidoctor-mathematical \
+        asciidoctor-pdf \
+        coderay \
+        json-schema \
+        i18n
 
 # Install chunked index generation scripts and add lunr to node searchpath
-run curl -sL https://deb.nodesource.com/setup_8.x | bash -
-run apt-get update -qq && apt-get install -y nodejs && apt-get clean
 run npm install -g lunr@2.3.6
 env NODE_PATH /usr/lib/node_modules
 
 # Install Roswell and asciidoctor-chunker. Need at least this specific
-# version (later may be OK, too)
-run curl -fsSL -o roswell.deb https://github.com/roswell/roswell/releases/download/v19.4.10.98/roswell_19.4.10.98-1_amd64.deb
-run dpkg -i roswell.deb
-run ros install alexandria lquery cl-fad
-run mkdir -p $HOME/common-lisp
-run (cd $HOME/common-lisp && git clone https://github.com/wshito/asciidoctor-chunker.git)
+# version (later may be OK, too). There seems to be no roswell APT
+# repository.
+run curl -fsSL -o roswell.deb https://github.com/roswell/roswell/releases/download/v20.01.14.104/roswell_20.01.14.104-1_amd64.deb && \
+    dpkg -i roswell.deb && \
+    ros install alexandria lquery cl-fad && \
+    mkdir -p $HOME/common-lisp && \
+    (cd $HOME/common-lisp && git clone https://github.com/wshito/asciidoctor-chunker.git)
 
 # Ensure the proper locale is installed and used - not present in ruby image
 # See https://serverfault.com/questions/54591/how-to-install-change-locale-on-debian#54597
@@ -74,3 +80,11 @@ run apt-get install -y -qq locales && \
     apt-get clean
 env LANG en_US.UTF-8
 
+# Should move back to Debian packages stage above once CI works
+run apt-get install -y -qq --no-install-recommends bash
+
+# Add the entrypoint to the image
+COPY entrypoint.vulkan.sh /root/entrypoint.vulkan.sh
+RUN chmod +x /root/entrypoint.vulkan.sh
+
+ENTRYPOINT ["/root/entrypoint.vulkan.sh"]
