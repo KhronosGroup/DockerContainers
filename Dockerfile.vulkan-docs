@@ -24,6 +24,7 @@ run curl -sL https://deb.nodesource.com/setup_12.x | bash -
 # Install required Debian packages
 run apt-get update -qq && \
     apt-get install -y -qq --no-install-recommends \
+        bash \
         bison  \
         build-essential \
         cmake \
@@ -36,6 +37,8 @@ run apt-get update -qq && \
         gosu \
         g++ \
         jing \
+        libavalon-framework-java \
+        libbatik-java \
         libcairo2-dev \
         libffi-dev \
         libgdk-pixbuf2.0-dev \
@@ -60,7 +63,7 @@ run apt-get update -qq && \
         i18n
 
 # Install chunked index generation scripts and add lunr to node searchpath
-run npm install -g lunr@2.3.6
+run npm install -g escape-string-regexp he lunr@2.3.6
 env NODE_PATH /usr/lib/node_modules
 
 # Install Roswell and asciidoctor-chunker. Need at least this specific
@@ -80,11 +83,10 @@ run apt-get install -y -qq locales && \
     apt-get clean
 env LANG en_US.UTF-8
 
-# Should move back to Debian packages stage above once CI works
-run apt-get install -y -qq --no-install-recommends bash
-
-# Add the entrypoint to the image
+# Add the entrypoint to the image, and ensure files installed in root (under
+# .roswell/ and common-lisp/) are accessible by the entrypoint when run as
+# other users.
 COPY entrypoint.vulkan.sh /root/entrypoint.vulkan.sh
-RUN chmod +x /root/entrypoint.vulkan.sh
+RUN chmod +x /root/entrypoint.vulkan.sh ; chmod go+rx /root
 
 ENTRYPOINT ["/root/entrypoint.vulkan.sh"]
