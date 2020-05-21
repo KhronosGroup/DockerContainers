@@ -26,7 +26,9 @@ RUN dpkg --add-architecture i386
 # Runtime-required packages
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y -qq \
+    apt-transport-https \
     build-essential \
+    ca-certificates \
     cmake \
     git \
     libegl1-mesa-dev \
