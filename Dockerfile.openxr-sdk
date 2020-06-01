@@ -59,9 +59,11 @@ RUN apt-get update -qq && \
     wget \
     gcc-multilib \
     g++-multilib \
-    linux-libc-dev:i386 \
+    libelf-dev:i386 \
     libgl1-mesa-dev:i386 \
     libvulkan-dev:i386 \
+    libwayland-dev:i386 \
+    libx11-dev:i386 \
     libx11-xcb-dev:i386 \
     libxcb-dri2-0-dev:i386 \
     libxcb-glx0-dev:i386 \
@@ -70,6 +72,7 @@ RUN apt-get update -qq && \
     libxcb-randr0-dev:i386 \
     libxrandr-dev:i386 \
     libxxf86vm-dev:i386 \
+    linux-libc-dev:i386 \
     mesa-common-dev:i386 \
     && apt-get clean
 
