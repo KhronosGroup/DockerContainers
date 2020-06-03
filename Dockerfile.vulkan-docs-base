@@ -75,6 +75,9 @@ run curl -fsSL -o roswell.deb https://github.com/roswell/roswell/releases/downlo
     mkdir -p $HOME/common-lisp && \
     (cd $HOME/common-lisp && git clone https://github.com/wshito/asciidoctor-chunker.git)
 
+# Install 'reuse' tool for repository license verification
+run apt-get install -y -qq --no-install-recommends python3-pip && pip3 install reuse
+
 # Ensure the proper locale is installed and used - not present in ruby image
 # See https://serverfault.com/questions/54591/how-to-install-change-locale-on-debian#54597
 run apt-get install -y -qq locales && \
