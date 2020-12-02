@@ -37,6 +37,7 @@ run apt-get update -qq && \
         ghostscript \
         git \
         gosu \
+        graphicsmagick-libmagick-dev-compat \
         g++ \
         jing \
         libavalon-framework-java \
@@ -57,7 +58,7 @@ run apt-get update -qq && \
         python3-termcolor \
         tcsh && \
     apt-get clean && \
-    gem install \
+    gem install -N \
         asciidoctor \
         asciidoctor-diagram \
         asciidoctor-mathematical \
@@ -65,6 +66,7 @@ run apt-get update -qq && \
         coderay \
         json-schema \
         i18n \
+        prawn-gmagick \
         rouge \
         text-hyphen && \
     pip3 install pygments reuse
