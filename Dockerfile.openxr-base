@@ -48,9 +48,9 @@ RUN gem install rake asciidoctor coderay json-schema asciidoctor-pdf
 RUN MATHEMATICAL_SKIP_STRDUP=1 gem install asciidoctor-mathematical
 
 # Basic pip packages
-RUN pip3 install codespell pypdf2 attrs pdoc3
+RUN python3 -m pip install --no-cache-dir codespell pypdf2 attrs pdoc3
 # pdf-diff pip package
-RUN pip3 install git+https://github.com/rpavlik/pdf-diff
+RUN python3 -m pip install --no-cache-dir git+https://github.com/rpavlik/pdf-diff
 
 # ImageMagick font config file - assuming the minimal install is why this didn't happen automatically
 # RUN wget http://www.imagemagick.org/Usage/scripts/imagick_type_gen && \
