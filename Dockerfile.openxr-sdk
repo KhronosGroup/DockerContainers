@@ -55,6 +55,7 @@ RUN apt-get update -qq && \
     python3-pillow \
     python3-pytest \
     python3-tabulate \
+    python3-pip \
     wayland-protocols \
     wget \
     gcc-multilib \
