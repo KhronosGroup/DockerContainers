@@ -1,4 +1,4 @@
-# Copyright (c) 2019 The Khronos Group Inc.
+# Copyright (c) 2019-2021 The Khronos Group Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -109,12 +109,12 @@ RUN apt-get update -qq && \
     poppler-utils \
     python-utidylib \
     python3 \
+    python3-attr \
+    python3-chardet \
     python3-lxml \
     python3-networkx \
     python3-pillow \
-    python3-pytest \
-    python3-tabulate \
-    python3-jinja2 \
+    python3-requests \
     trang \
     wget \
     xmlstarlet && \
