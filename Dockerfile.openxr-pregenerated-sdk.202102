@@ -1,4 +1,6 @@
-# Copyright (c) 2019 The Khronos Group Inc.
+# Copyright (c) 2019-2021, The Khronos Group Inc.
+#
+# SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +16,7 @@
 
 # This is a Docker container for OpenXR SDK interactive builds.
 
-FROM khronosgroup/docker-images:openxr-pregenerated-sdk-base
+FROM khronosgroup/docker-images:openxr-pregenerated-sdk-base.202102
 LABEL maintainer="Ryan Pavlik <ryan.pavlik@collabora.com>"
 
 # Add the entrypoint to the image
