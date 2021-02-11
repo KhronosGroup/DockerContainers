@@ -12,7 +12,7 @@ REPO="khronosgroup/docker-images"
     cd $(dirname $0)
     DOCKERFILE=$1
     shift
-    TAG=${DOCKERFILE##*.}
+    TAG=${DOCKERFILE#Dockerfile.}
     if [ "$TAG" == "Dockerfile" ]; then
         TAG=latest
     fi
