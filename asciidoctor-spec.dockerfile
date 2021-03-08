@@ -1,18 +1,11 @@
-# Copyright (c) 2019-2020 The Khronos Group Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# Copyright 2019-2021 The Khronos Group Inc.
+# SPDX-License-Identifier: Apache-2.0
 
-# This is a Docker container for Vulkan specification builds
+# This defines a Docker image for building a set of Khronos specifications
+# written using asciidoctor markup.
+# It contains the asciidoctor toolchain, and related plugins and tools.
+# Some projects may have additional toolchain requirements, and will use
+# Docker images layered on this one.
 
 from ruby:2.7
 label maintainer="Jon Leech <devrel@oddhack.org>"
@@ -21,7 +14,7 @@ label maintainer="Jon Leech <devrel@oddhack.org>"
 # nodejs is actually installed in the next step
 run curl -sL https://deb.nodesource.com/setup_12.x | bash -
 
-# Install required Debian packages
+# Debian packages
 # pandoc is for potential use with Markdown
 # reuse is for repository license verification
 run apt-get update -qq && \
@@ -57,8 +50,10 @@ run apt-get update -qq && \
         python3-pytest \
         python3-termcolor \
         tcsh && \
-    apt-get clean && \
-    gem install -N \
+    apt-get clean
+
+# Ruby gems providing asciidoctor and related plugins
+run gem install -N \
         asciidoctor \
         asciidoctor-diagram \
         asciidoctor-mathematical \
@@ -67,22 +62,25 @@ run apt-get update -qq && \
         json-schema \
         i18n \
         prawn-gmagick \
+        pygments.rb \
         rouge \
-        text-hyphen && \
-    pip3 install pygments reuse
+        text-hyphen
 
-# Install chunked index generation scripts and add lunr to node searchpath
+# Python packages
+run pip3 install pygments reuse
+
+# JavaScript packages
 run npm install -g escape-string-regexp he lunr@2.3.6
 env NODE_PATH /usr/lib/node_modules
 
-# Install Roswell and asciidoctor-chunker. Need at least this specific
-# version (later may be OK, too). There seems to be no roswell APT
-# repository.
-run curl -fsSL -o roswell.deb https://github.com/roswell/roswell/releases/download/v20.01.14.104/roswell_20.01.14.104-1_amd64.deb && \
-    dpkg -i roswell.deb && \
-    ros install alexandria lquery cl-fad && \
-    mkdir -p $HOME/common-lisp && \
-    (cd $HOME/common-lisp && git clone https://github.com/wshito/asciidoctor-chunker.git)
+# # Install Roswell and asciidoctor-chunker. Need at least this specific
+# # version (later may be OK, too). There seems to be no roswell APT
+# # repository.
+# run curl -fsSL -o roswell.deb https://github.com/roswell/roswell/releases/download/v20.01.14.104/roswell_20.01.14.104-1_amd64.deb && \
+#     dpkg -i roswell.deb && \
+#     ros install alexandria lquery cl-fad && \
+#     mkdir -p $HOME/common-lisp && \
+#     (cd $HOME/common-lisp && git clone https://github.com/wshito/asciidoctor-chunker.git)
 
 # Ensure the proper locale is installed and used - not present in ruby image
 # See https://serverfault.com/questions/54591/how-to-install-change-locale-on-debian#54597

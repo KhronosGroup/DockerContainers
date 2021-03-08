@@ -39,6 +39,14 @@ fi
 export HOME=/home/$USER
 export USER
 
+# This is a temporary workaround until the JavaScript version of the chunker
+# is supported. If running as non-root, link to the neccessary user install
+# directories for the chunker.
+if test $USER != root ; then
+    ln -s /root/common-lisp $HOME/common-lisp
+    ln -s /root/.roswell $HOME/.roswell
+fi
+
 echo "HOME=$HOME USER=$USER CONTAINER_CWD=$CONTAINER_CWD"
 
 if [ "${CONTAINER_CWD}" ]; then
