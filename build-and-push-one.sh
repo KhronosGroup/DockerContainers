@@ -1,9 +1,10 @@
 #!/bin/bash
-# Copyright (c) 2019-2021, The Khronos Group Inc.
+# Copyright 2019-2021, The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 # Pass a dockerfile name.
-# The dockerfile's extension is used as the tag within the repo.
+# The tag portion of the name is used as the tag within the repo.
+# Name format can be either tag.dockerfile or Dockerfile.tag
 
 set -e
 
@@ -14,6 +15,7 @@ REPO="khronosgroup/docker-images"
     DOCKERFILE=$1
     shift
     TAG=${DOCKERFILE#Dockerfile.}
+    TAG=${TAG%.dockerfile}
     if [ "$TAG" == "Dockerfile" ]; then
         TAG=latest
     fi
