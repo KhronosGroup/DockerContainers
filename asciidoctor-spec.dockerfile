@@ -73,15 +73,6 @@ run pip3 install pygments reuse
 run npm install -g escape-string-regexp he lunr@2.3.6
 env NODE_PATH /usr/lib/node_modules
 
-# # Install Roswell and asciidoctor-chunker. Need at least this specific
-# # version (later may be OK, too). There seems to be no roswell APT
-# # repository.
-# run curl -fsSL -o roswell.deb https://github.com/roswell/roswell/releases/download/v20.01.14.104/roswell_20.01.14.104-1_amd64.deb && \
-#     dpkg -i roswell.deb && \
-#     ros install alexandria lquery cl-fad && \
-#     mkdir -p $HOME/common-lisp && \
-#     (cd $HOME/common-lisp && git clone https://github.com/wshito/asciidoctor-chunker.git)
-
 # Ensure the proper locale is installed and used - not present in ruby image
 # See https://serverfault.com/questions/54591/how-to-install-change-locale-on-debian#54597
 run apt-get install -y -qq locales && \
