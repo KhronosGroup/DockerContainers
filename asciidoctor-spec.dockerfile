@@ -67,7 +67,7 @@ run gem install -N \
         text-hyphen
 
 # Python packages
-run pip3 install pygments reuse
+run pip3 install pygments reuse networkx
 
 # JavaScript packages
 run npm install -g escape-string-regexp he lunr@2.3.6
