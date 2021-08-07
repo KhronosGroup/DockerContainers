@@ -70,7 +70,10 @@ run gem install -N \
 run pip3 install pygments reuse networkx
 
 # JavaScript packages
-run npm install -g escape-string-regexp he lunr@2.3.6
+# escape-string-regexp is locked @2.0.0 because the current version is an
+# ES6 module requiring unobvious changes from 'require' to 'import'
+# There is an issue with more recent lunr versions, as well
+run npm install -g escape-string-regexp@2.0.0 he lunr@2.3.6
 env NODE_PATH /usr/lib/node_modules
 
 # Ensure the proper locale is installed and used - not present in ruby image
