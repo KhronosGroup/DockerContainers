@@ -16,7 +16,7 @@
 
 # This is a Docker container for OpenXR specification builds
 
-FROM ruby:2.7 as builder
+FROM ruby:2.7-buster as builder
 LABEL maintainer="Ryan Pavlik <ryan.pavlik@collabora.com>"
 
 # Basic spec build and check packages
@@ -87,7 +87,7 @@ RUN mkdir -p ~/.magick && \
 # 	gosu nobody true
 
 # Second stage: start a simpler image that doesn't have the dev packages
-FROM ruby:2.7
+FROM ruby:2.7-buster
 
 # Copy the generated font list
 COPY --from=builder /root/.magick/type.xml /root/.magick/type.xml
