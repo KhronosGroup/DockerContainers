@@ -49,7 +49,7 @@ RUN apt-get update -qq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 # Basic gems
-RUN gem install rake asciidoctor coderay json-schema asciidoctor-pdf
+RUN gem install rake asciidoctor coderay json-schema asciidoctor-pdf rghost
 RUN MATHEMATICAL_SKIP_STRDUP=1 gem install asciidoctor-mathematical
 
 # Basic pip packages
