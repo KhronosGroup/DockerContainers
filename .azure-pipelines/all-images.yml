@@ -12,31 +12,26 @@ steps:
   - template: build-template.yml
     parameters:
       command: ${{ parameters.command }}
-      tag: openxr-base
+      tag: openxr-base.202110
 
   - template: build-template.yml
     parameters:
       command: ${{ parameters.command }}
-      tag: openxr
+      tag: openxr.202110
 
   # OpenXR SDK builder
-  - script: docker pull ubuntu:16.04
-    displayName: Pull ubuntu:16.04 base image
+  - script: docker pull ubuntu:18.04
+    displayName: Pull ubuntu:18.04 base image
 
   - template: build-template.yml
     parameters:
       command: ${{ parameters.command }}
-      tag: openxr-sdk
+      tag: openxr-sdk.202110
 
   - template: build-template.yml
     parameters:
       command: ${{ parameters.command }}
-      tag: openxr-pregenerated-sdk-base
-
-  - template: build-template.yml
-    parameters:
-      command: ${{ parameters.command }}
-      tag: openxr-pregenerated-sdk
+      tag: openxr-pregenerated-sdk.202201
 
   # This image build is broken right now: E: Package 'ttf-lyx' has no installation candidate
   # - template: build-template.yml
