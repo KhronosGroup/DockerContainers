@@ -2,9 +2,13 @@
 # Copyright 2019-2021, The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
-# Pass a dockerfile name.
+# Pass a Dockerfile name and version (typically the year and month).
+# Optionally pass the literal text "push" as third argument to publish
+# the result to dockerhub.
+# Any extra arguments (including the third argument if it's not "push")
+# are passed to `docker build` literally.
+#
 # The tag portion of the name is used as the tag within the repo.
-# Name format can be either tag.dockerfile or Dockerfile.tag
 
 set -e
 
@@ -13,8 +17,18 @@ REPO="khronosgroup/docker-images"
 (
     cd $(dirname $0)
     DOCKERFILE=$1
-    shift
-    TAG=${DOCKERFILE#Dockerfile.}
-    TAG=${TAG%.dockerfile}
-    docker build "$@" . -f "$DOCKERFILE" -t "$REPO:$TAG"
+    VERSION=$2
+    shift 2
+    if [ "$1" == "push" ]; then
+        OP=$1
+        shift
+    fi
+    docker build "$@" . -f "$DOCKERFILE.Dockerfile" \
+        --build-arg "VERSION=$VERSION" \
+        -t "$REPO:$DOCKERFILE.latest" \
+        -t "$REPO:$DOCKERFILE.$VERSION"
+    if [ "$OP" == "push" ]; then
+        docker push "$REPO:$DOCKERFILE.latest"
+        docker push "$REPO:$DOCKERFILE.$VERSION"
+    fi
 )

@@ -6,12 +6,16 @@ parameters:
   imageName: "khronosgroup/docker-images"
   tag:
   command: build
+  version:
 
 steps:
   - task: Docker@2
-    displayName: ${{ parameters.command }} ${{ parameters.tag }}
+    displayName: ${{ parameters.command }} ${{ parameters.tag }} ${{ parameters.version }}
     inputs:
       repository: ${{ parameters.imageName }}
       command: ${{ parameters.command }}
-      tags: ${{ parameters.tag }}
-      Dockerfile: Dockerfile.${{ parameters.tag }}
+      arguments: "--build-arg \"VERSION=${{ parameters.version }}\""
+      tags: |
+        ${{ parameters.tag }}.latest
+        ${{ parameters.tag }}.${{ parameters.version }}
+      Dockerfile: ${{ parameters.tag }}.Dockerfile

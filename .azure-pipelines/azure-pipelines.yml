@@ -9,20 +9,3 @@ jobs:
       - template: all-images.yml
         parameters:
           command: build
-
-  # push job - runs only on master
-  - job: build_and_push
-    condition: eq(variables['build.sourceBranch'], 'refs/heads/master')
-    pool:
-      vmImage: "ubuntu-latest"
-    steps:
-
-      - task: Docker@2
-        displayName: Login to Docker Hub
-        inputs:
-          command: login
-          containerRegistry: docker-hub
-      
-      - template: all-images.yml
-        parameters:
-          command: buildAndPush
