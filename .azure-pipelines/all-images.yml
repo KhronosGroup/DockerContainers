@@ -6,32 +6,30 @@ parameters:
 
 steps:
   # OpenXR spec builder
-  - script: docker pull ruby:2.3
-    displayName: Pull ruby:2.3 base image
+  - template: build-template.yml
+    parameters:
+      command: ${{ parameters.command }}
+      tag: openxr-base
+      version: 202110
 
   - template: build-template.yml
     parameters:
       command: ${{ parameters.command }}
-      tag: openxr-base.202110
-
-  - template: build-template.yml
-    parameters:
-      command: ${{ parameters.command }}
-      tag: openxr.202110
+      tag: openxr
+      version: 202110
 
   # OpenXR SDK builder
-  - script: docker pull ubuntu:18.04
-    displayName: Pull ubuntu:18.04 base image
+  - template: build-template.yml
+    parameters:
+      command: ${{ parameters.command }}
+      tag: openxr-sdk
+      version: 202110
 
   - template: build-template.yml
     parameters:
       command: ${{ parameters.command }}
-      tag: openxr-sdk.202110
-
-  - template: build-template.yml
-    parameters:
-      command: ${{ parameters.command }}
-      tag: openxr-pregenerated-sdk.202201
+      tag: openxr-pregenerated-sdk
+      version: 202201
 
   # This image build is broken right now: E: Package 'ttf-lyx' has no installation candidate
   # - template: build-template.yml

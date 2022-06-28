@@ -16,7 +16,9 @@
 
 # This is a Docker container for (interactive) OpenXR specification builds
 
-FROM khronosgroup/docker-images:openxr-base.202110
+ARG VERSION
+
+FROM khronosgroup/docker-images:openxr-base.$VERSION
 LABEL maintainer="Ryan Pavlik <ryan.pavlik@collabora.com>"
 
 # Add the entrypoint to the image
