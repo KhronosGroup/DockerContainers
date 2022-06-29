@@ -59,6 +59,7 @@ run gem install -N \
         asciidoctor-mathematical \
         asciidoctor-pdf \
         coderay \
+        hexapdf \
         json-schema \
         i18n \
         prawn-gmagick \
