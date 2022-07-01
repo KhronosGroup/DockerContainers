@@ -25,10 +25,10 @@ REPO="khronosgroup/docker-images"
     fi
     docker build "$@" . -f "$DOCKERFILE.Dockerfile" \
         --build-arg "VERSION=$VERSION" \
-        -t "$REPO:$DOCKERFILE.latest" \
+        -t "$REPO:$DOCKERFILE" \
         -t "$REPO:$DOCKERFILE.$VERSION"
     if [ "$OP" == "push" ]; then
-        docker push "$REPO:$DOCKERFILE.latest"
+        docker push "$REPO:$DOCKERFILE"
         docker push "$REPO:$DOCKERFILE.$VERSION"
     fi
 )
