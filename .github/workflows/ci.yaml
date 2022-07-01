@@ -1,0 +1,11 @@
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-images:
+    name: Build-test all Docker images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: ./build-all.sh
