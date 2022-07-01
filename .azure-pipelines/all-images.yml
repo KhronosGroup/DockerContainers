@@ -9,37 +9,31 @@ steps:
   - template: build-template.yml
     parameters:
       command: ${{ parameters.command }}
-      tag: openxr-base
+      repo: openxr-base
       version: 202110
 
   - template: build-template.yml
     parameters:
       command: ${{ parameters.command }}
-      tag: openxr
+      repo: openxr
       version: 202110
 
   # OpenXR SDK builder
   - template: build-template.yml
     parameters:
       command: ${{ parameters.command }}
-      tag: openxr-sdk
+      repo: openxr-sdk
       version: 202110
 
   - template: build-template.yml
     parameters:
       command: ${{ parameters.command }}
-      tag: openxr-pregenerated-sdk
+      repo: openxr-pregenerated-sdk
       version: 202201
 
   # Rust bindings-generator builder
   - template: build-template.yml
     parameters:
       command: ${{ parameters.command }}
-      tag: rust
+      repo: rust
       version: 202206
-
-  # This image build is broken right now: E: Package 'ttf-lyx' has no installation candidate
-  # - template: build-template.yml
-  #   parameters:
-  #     command: ${{ parameters.command }}
-  #     tag: latest

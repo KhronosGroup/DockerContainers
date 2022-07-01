@@ -3,19 +3,19 @@
 # See <https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/docker?view=azure-devops>
 
 parameters:
-  imageName: "khronosgroup/docker-images"
-  tag:
+  repoOwner: "khronosgroup"
+  repo:
   command: build
   version:
 
 steps:
   - task: Docker@2
-    displayName: ${{ parameters.command }} ${{ parameters.tag }} ${{ parameters.version }}
+    displayName: ${{ parameters.command }} ${{ parameters.repo }} @ ${{ parameters.version }}
     inputs:
-      repository: ${{ parameters.imageName }}
+      repository: "${{ parameters.repoOwner }}/${{ parameters.repo }}"
       command: ${{ parameters.command }}
-      arguments: "--build-arg \"VERSION=${{ parameters.version }}\""
+      arguments: '--build-arg "VERSION=${{ parameters.version }}"'
       tags: |
-        ${{ parameters.tag }}.latest
-        ${{ parameters.tag }}.${{ parameters.version }}
-      Dockerfile: ${{ parameters.tag }}.Dockerfile
+        latest
+        ${{ parameters.version }}
+      Dockerfile: ${{ parameters.repo }}.Dockerfile
