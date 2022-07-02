@@ -9,9 +9,8 @@ repository https://hub.docker.com/r/khronosgroup/docker-images.
 ## Structure
 
 Each Dockerfile is named `<tag>.Dockerfile` where `<tag>` (e.g. `openxr`, `asciidoctor-spec`)
-matches the tag for that image in the Dockerhub repository, suffixed with both `-latest` for the
-latest revision of this image, and `-<date>` representing a timestamp when this image was last
-modified.
+matches the tag for that image in the Dockerhub repository (e.g. `KhronosGroup/docker-images:rust`).
+A second tag is suffixed with `.<date>` representing a timestamp when this image was last modified.
 
 ## Scripts
 

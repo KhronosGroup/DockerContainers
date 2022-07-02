@@ -16,6 +16,6 @@ steps:
       command: ${{ parameters.command }}
       arguments: "--build-arg \"VERSION=${{ parameters.version }}\""
       tags: |
-        ${{ parameters.tag }}.latest
+        ${{ parameters.tag }}
         ${{ parameters.tag }}.${{ parameters.version }}
       Dockerfile: ${{ parameters.tag }}.Dockerfile
