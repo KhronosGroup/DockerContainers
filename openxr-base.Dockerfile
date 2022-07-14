@@ -53,7 +53,7 @@ RUN gem install rake asciidoctor coderay json-schema asciidoctor-pdf rghost
 RUN MATHEMATICAL_SKIP_STRDUP=1 gem install asciidoctor-mathematical
 
 # Basic pip packages
-RUN python3 -m pip install --no-cache-dir codespell pypdf2 pdoc3 reuse
+RUN python3 -m pip install --no-cache-dir codespell pypdf2 pdoc3 reuse jinja2-cli
 # pdf-diff pip package
 RUN python3 -m pip install --no-cache-dir git+https://github.com/rpavlik/pdf-diff
 
