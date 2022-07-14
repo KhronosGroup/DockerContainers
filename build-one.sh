@@ -23,6 +23,7 @@ REPO="khronosgroup/docker-images"
         OP=$1
         shift
     fi
+    [ -n "$CI" ] && echo "::group::$DOCKERFILE @ $VERSION"
     docker build "$@" . -f "$DOCKERFILE.Dockerfile" \
         --build-arg "VERSION=$VERSION" \
         -t "$REPO:$DOCKERFILE" \
@@ -31,4 +32,5 @@ REPO="khronosgroup/docker-images"
         docker push "$REPO:$DOCKERFILE"
         docker push "$REPO:$DOCKERFILE.$VERSION"
     fi
+    [ -n "$CI" ] && echo "::endgroup::"
 )
