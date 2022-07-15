@@ -118,6 +118,7 @@ RUN apt-get update -qq && \
     python3-pytest \
     python3-requests \
     python3-utidylib \
+    python3-venv \
     trang \
     wget \
     xmlstarlet && \
