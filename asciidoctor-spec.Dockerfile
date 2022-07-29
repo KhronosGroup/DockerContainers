@@ -12,7 +12,7 @@ label maintainer="Jon Leech <devrel@oddhack.org>"
 
 # This adds the Node.js repository to the apt registry
 # nodejs is actually installed in the next step
-run curl -sL https://deb.nodesource.com/setup_12.x | bash -
+run curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
 
 # Debian packages
 # pandoc is for potential use with Markdown
@@ -68,7 +68,10 @@ run gem install -N \
         text-hyphen
 
 # Python packages
-run pip3 install pygments reuse networkx
+# Something odd in the Docker build causes errors if setuptools isn't
+# installed first, although it should be a dependency of the other packages.
+run pip3 install wheel setuptools
+run pip3 install codespell networkx pygments reuse
 
 # JavaScript packages
 # escape-string-regexp is locked @2.0.0 because the current version is an
