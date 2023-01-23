@@ -72,6 +72,7 @@ run gem install -N \
 # installed first, although it should be a dependency of the other packages.
 run pip3 install wheel setuptools
 run pip3 install codespell networkx pygments reuse
+run pip3 install lxml
 
 # JavaScript packages
 # escape-string-regexp is locked @2.0.0 because the current version is an
