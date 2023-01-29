@@ -49,7 +49,8 @@ run apt-get update -qq && \
         python3-pip \
         python3-pytest \
         python3-termcolor \
-        tcsh && \
+        tcsh \
+        ninja-build && \
     apt-get clean
 
 # Ruby gems providing asciidoctor and related plugins
@@ -72,7 +73,7 @@ run gem install -N \
 # installed first, although it should be a dependency of the other packages.
 run pip3 install wheel setuptools
 run pip3 install codespell networkx pygments reuse
-run pip3 install lxml
+run pip3 install lxml meson
 
 # JavaScript packages
 # escape-string-regexp is locked @2.0.0 because the current version is an
