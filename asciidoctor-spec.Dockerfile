@@ -1,4 +1,4 @@
-# Copyright 2019-2022 The Khronos Group Inc.
+# Copyright 2019-2023 The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 # This defines a Docker image for building a set of Khronos specifications
@@ -41,6 +41,7 @@ run apt-get update -qq && \
         libpango1.0-dev \
         libreadline-dev \
         libxml2-dev \
+        ninja-build \
         nodejs \
         pandoc \
         pdftk \
@@ -49,8 +50,8 @@ run apt-get update -qq && \
         python3-pip \
         python3-pytest \
         python3-termcolor \
-        tcsh && \
-    apt-get clean
+        tcsh \
+    && apt-get clean
 
 # Ruby gems providing asciidoctor and related plugins
 run gem install -N \
@@ -72,7 +73,7 @@ run gem install -N \
 # installed first, although it should be a dependency of the other packages.
 run pip3 install wheel setuptools
 run pip3 install codespell networkx pygments reuse
-run pip3 install lxml
+run pip3 install lxml meson
 
 # JavaScript packages
 # escape-string-regexp is locked @2.0.0 because the current version is an
