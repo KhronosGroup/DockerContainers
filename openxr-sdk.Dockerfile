@@ -88,17 +88,7 @@ RUN apt-get update -qq && \
     mesa-common-dev:i386 \
     && apt-get clean
 
-# Don't delete /var/lib/apt/lists/ before this command!
-COPY release-codename.py /usr/bin/release-codename.py
-RUN release-codename.py | tee /codename
-
-# Install old clang-format-6.0
-RUN echo "deb https://apt.llvm.org/$(cat /codename)/ llvm-toolchain-$(cat /codename)-6.0 main" >> /etc/apt/sources.list.d/llvm.list && \
-    cat /etc/apt/sources.list.d/llvm.list 1>&2 && \
-    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | gpg --dearmor > /etc/apt/trusted.gpg.d/llvm.gpg && \
-    apt-get update -qq && apt-get install -f && apt-get install --no-install-recommends -y -qq clang-format-6.0 clang-6.0 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
 # Copy in the toolchain file
 COPY i386.cmake /i386.cmake
+
+USER openxr-sdk
