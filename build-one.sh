@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2019-2021, The Khronos Group Inc.
+# Copyright 2019-2023, The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 # Pass a Dockerfile name and version (typically the year and month).
@@ -15,8 +15,8 @@ set -e
 REPO="khronosgroup/docker-images"
 
 (
-    cd $(dirname $0)
-    DOCKERFILE=$1
+    cd "$(dirname "$0")"
+    DOCKERFILE=${1%%.Dockerfile}
     VERSION=$2
     shift 2
     if [ "$1" == "push" ]; then
