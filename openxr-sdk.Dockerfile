@@ -90,5 +90,3 @@ RUN apt-get update -qq && \
 
 # Copy in the toolchain file
 COPY i386.cmake /i386.cmake
-
-USER openxr-sdk
