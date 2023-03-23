@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2021 The Khronos Group Inc.
+# Copyright (c) 2019-2023 The Khronos Group Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -17,7 +17,7 @@
 # This is a Docker container for OpenXR SDK CI builds.
 # Intended for CI or interactive use.
 
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 LABEL maintainer="Ryan Pavlik <ryan.pavlik@collabora.com>"
 
 ENV LANG C.UTF-8
@@ -26,8 +26,8 @@ ENV LANG C.UTF-8
 RUN dpkg --add-architecture i386
 
 # Runtime-required packages
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y -qq \
+RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
+    env DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -qq \
     apt-transport-https \
     build-essential \
     ca-certificates \

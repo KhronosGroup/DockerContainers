@@ -20,8 +20,8 @@ FROM ruby:2.7-bullseye as builder
 LABEL maintainer="Ryan Pavlik <ryan.pavlik@collabora.com>"
 
 # Basic spec build and check packages
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y -qq \
+RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
+    env DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -qq \
     bison \
     build-essential \
     cmake \
@@ -67,8 +67,8 @@ FROM ruby:2.7-bullseye
 COPY --from=builder /usr/local/ /usr/local/
 
 # Runtime-required packages
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y -qq \
+RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
+    env DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -qq \
     clang-format \
     fonts-lyx \
     ghostscript \
