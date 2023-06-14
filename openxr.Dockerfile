@@ -73,6 +73,7 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     fonts-lyx \
     ghostscript \
     git \
+    git-lfs \
     gosu \
     imagemagick \
     jing \
