@@ -10,8 +10,6 @@ ENV LANG C.UTF-8
 
 RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     env DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -qq \
-        apt-transport-https \
-        build-essential \
         ca-certificates \
         cmake \
         default-jdk-headless \
@@ -20,21 +18,14 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
         glslang-tools \
         gnupg \
         gradle \
-        libeigen3-dev \
         ninja-build \
         p7zip-full \
         pkg-config \
         python3 \
         python3-attr \
-        python3-chardet \
-        python3-dev \
         python3-jinja2 \
         python3-lxml \
         python3-networkx \
-        python3-pip \
-        python3-pytest \
-        python3-setuptools \
-        python3-wheel \
         unzip \
         wget \
         zip \
