@@ -47,15 +47,15 @@ RUN useradd --shell /bin/bash --create-home --no-log-init --uid 1000 --gid 1000 
 ### Android SDK components
 
 # This must match android.compileSdk in all Android build.gradle files
-ENV ANDROID_COMPILE_SDK=33
+ENV ANDROID_COMPILE_SDK=29
 
 # This must match android.buildToolsVersion in all Android build.gradle files
-ENV ANDROID_BUILD_TOOLS=34.0.0
+ENV ANDROID_BUILD_TOOLS=30.0.3
 
 # look up on https://developer.android.com/studio/index.html#downloads when updating other versions
 ENV ANDROID_CLI_TOOLS=9477386
 
-ENV ANDROID_NDK_VERSION=25.2.9519653
+ENV ANDROID_NDK_VERSION=21.4.7075529
 
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
 
@@ -65,16 +65,6 @@ RUN /install-android-sdk.sh
 ### Android NDK
 
 ENV ANDROID_NDK_HOME=/opt/android-sdk/ndk/${ANDROID_NDK_VERSION}
-
-# aka 21.4.7075529
-# ENV ANDROID_NDK_VERSION=r21e
-# aka 25.2.9519653
-# ENV ANDROID_NDK_VERSION=r25c
-# ENV ANDROID_NDK_ARCHIVE_FN=android-ndk-r25c-linux.zip
-
-# COPY install-ndk.sh /install-ndk.sh
-# RUN /install-ndk.sh
-
 
 # Switch to non-privileged user
 USER openxr
