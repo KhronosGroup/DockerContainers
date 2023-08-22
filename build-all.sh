@@ -12,6 +12,6 @@ set -e
     ./build-one.sh rust 202206 "$@"
     ./build-one.sh openxr 20230614 "$@"
     ./build-one.sh openxr-sdk 20230614 "$@"
-    ./build-one.sh openxr-pregenerated-sdk 202201 "$@"
+    ./build-one.sh openxr-pregenerated-sdk 20230822 "$@"
     ./build-one.sh openxr-android 20230713 "$@"
 )
