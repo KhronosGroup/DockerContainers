@@ -16,7 +16,7 @@
 
 # This is a Docker container for OpenXR specification builds
 
-FROM ruby:2.7-bullseye as builder
+FROM ruby:3.1-bookworm as builder
 LABEL maintainer="Ryan Pavlik <ryan.pavlik@collabora.com>"
 
 # Basic spec build and check packages
@@ -52,16 +52,17 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
 RUN gem install rake asciidoctor coderay json-schema rghost
 # Newer versions break our index customizer, haven't figured out the fix yet.
 RUN gem install asciidoctor-pdf --version 1.6.2
-RUN MATHEMATICAL_SKIP_STRDUP=1 gem install asciidoctor-mathematical
+# RUN MATHEMATICAL_SKIP_STRDUP=1 gem install asciidoctor-mathematical
+RUN gem install rouge
 
 # Basic pip packages
-RUN python3 -m pip install --no-cache-dir codespell pypdf2 pdoc3 reuse jinja2-cli
+RUN python3 -m pip install --break-system-packages --no-cache-dir codespell pypdf2 pdoc3 reuse jinja2-cli
 
 # pdf-diff pip package
-RUN python3 -m pip install --no-cache-dir git+https://github.com/rpavlik/pdf-diff
+RUN python3 -m pip install --break-system-packages --no-cache-dir git+https://github.com/rpavlik/pdf-diff
 
 # Second stage: start a simpler image that doesn't have the dev packages
-FROM ruby:2.7-bullseye
+FROM ruby:3.1-bookworm
 
 # Copy locally-installed gems and python packages
 COPY --from=builder /usr/local/ /usr/local/
@@ -69,7 +70,7 @@ COPY --from=builder /usr/local/ /usr/local/
 # Runtime-required packages
 RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     env DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -qq \
-    clang-format \
+    clang-format-13 \
     fonts-lyx \
     ghostscript \
     git \
