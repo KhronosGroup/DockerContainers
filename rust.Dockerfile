@@ -4,7 +4,7 @@
 # This defines a docker image for generating and buld-testing
 # Rust bindings to the Vulkan API.
 
-FROM rust:latest
+FROM rust:1.74
 LABEL maintainer="Marijn Suijten <marijn@traverseresearch.nl>"
 
 # Git for cloning repos, libclang-dev for running bindgen
