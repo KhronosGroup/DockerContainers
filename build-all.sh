@@ -9,7 +9,7 @@ set -e
     ./build-one.sh asciidoctor-spec 202206 "$@"
     ./build-one.sh vulkan-docs-base 202206 "$@"
     ./build-one.sh vulkan-docs 202206 "$@"
-    ./build-one.sh rust 202206 "$@"
+    ./build-one.sh rust 202312 "$@"
     ./build-one.sh openxr 20231010.1 "$@"
     ./build-one.sh openxr-sdk 20230614 "$@"
     ./build-one.sh openxr-pregenerated-sdk 20230822 "$@"
