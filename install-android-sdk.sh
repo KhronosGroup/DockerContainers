@@ -41,9 +41,6 @@ echo y | $SDKMANAGER "ndk;${ANDROID_NDK_VERSION}" >> /dev/null
 echo "Installing CMake ${ANDROID_CMAKE_VERSION}"
 echo y | $SDKMANAGER "cmake;${ANDROID_CMAKE_VERSION}" >> /dev/null
 
-echo "Installing the Android 'patcher'"
-echo y | $SDKMANAGER "patcher;v4" >> /dev/null
-
 echo "Installing the Android build tools ${ANDROID_BUILD_TOOLS}"
 echo y | $SDKMANAGER "build-tools;${ANDROID_BUILD_TOOLS}" >> /dev/null
 
