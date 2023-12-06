@@ -27,10 +27,18 @@ REPO="khronosgroup/docker-images"
     docker build "$@" . -f "$DOCKERFILE.Dockerfile" \
         --build-arg "VERSION=$VERSION" \
         -t "$REPO:$DOCKERFILE" \
-        -t "$REPO:$DOCKERFILE.$VERSION"
+        -t "$REPO:$DOCKERFILE.$VERSION" \
+        $EXTRA_DOCKER_ARGS
     if [ "$OP" == "push" ]; then
         docker push "$REPO:$DOCKERFILE"
         docker push "$REPO:$DOCKERFILE.$VERSION"
     fi
+
+    # Show how to refer to it.
+    HASH=$(docker inspect --format='{{index .RepoDigests 0}}' "$REPO:$DOCKERFILE.$VERSION" | sed -E -n "s/.*(sha256:.*)/\1/p")
+    echo
+    echo "** To refer to this image precisely, use:"
+    echo "   $REPO:$DOCKERFILE.$VERSION@$HASH"
+
     [ -n "$CI" ] && echo "::endgroup::"
 )
