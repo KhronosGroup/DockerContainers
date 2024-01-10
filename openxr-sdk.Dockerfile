@@ -18,7 +18,7 @@
 # Intended for CI or interactive use.
 
 FROM ubuntu:20.04
-LABEL maintainer="Ryan Pavlik <ryan.pavlik@collabora.com>"
+LABEL maintainer="Rylie Pavlik <rylie.pavlik@collabora.com>"
 
 ENV LANG C.UTF-8
 

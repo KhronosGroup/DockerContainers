@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 FROM debian:bookworm
-LABEL maintainer="Ryan Pavlik <ryan.pavlik@collabora.com>"
+LABEL maintainer="Rylie Pavlik <rylie.pavlik@collabora.com>"
 
 ENV LANG C.UTF-8
 

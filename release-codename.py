@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Copyright 2019 Collabora, Ltd.
 # SPDX-License-Identifier: BSL-1.0
-# Author: Ryan Pavlik <ryan.pavlik@collabora.com>
+# Author: Rylie Pavlik <rylie.pavlik@collabora.com>
 # Parses apt-cache policy output on Ubuntu and Debian to identify the release codename
 # (e.g. xenial, stretch)
 
