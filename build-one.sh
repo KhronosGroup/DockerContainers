@@ -32,13 +32,20 @@ REPO="khronosgroup/docker-images"
     if [ "$OP" == "push" ]; then
         docker push "$REPO:$DOCKERFILE"
         docker push "$REPO:$DOCKERFILE.$VERSION"
+
+        # Show how to refer to it.
+        # This digest is only created by pushing to a v2 registry,
+        # so we can't do this reliably except in the "push" base
+        HASH=$(docker inspect --format='{{index .RepoDigests 0}}' "$REPO:$DOCKERFILE.$VERSION" | sed -E -n "s/.*(sha256:.*)/\1/p")
+        echo
+        echo "** To refer to this image precisely, use:"
+        echo "   $REPO:$DOCKERFILE.$VERSION@$HASH"
+    else
+        echo
+        echo "** Not pushing, so no SHA256 manifest available. Until you push this image, refer to it as:"
+        echo "   $REPO:$DOCKERFILE.$VERSION"
     fi
 
-    # Show how to refer to it.
-    HASH=$(docker inspect --format='{{index .RepoDigests 0}}' "$REPO:$DOCKERFILE.$VERSION" | sed -E -n "s/.*(sha256:.*)/\1/p")
-    echo
-    echo "** To refer to this image precisely, use:"
-    echo "   $REPO:$DOCKERFILE.$VERSION@$HASH"
 
     [ -n "$CI" ] && echo "::endgroup::"
 )
