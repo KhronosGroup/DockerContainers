@@ -1,4 +1,4 @@
-# Copyright 2019-2022 The Khronos Group Inc.
+# Copyright 2019-2024 The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 # This defines a docker image for generating and buld-testing

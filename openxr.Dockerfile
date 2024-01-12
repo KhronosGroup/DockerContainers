@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2023, The Khronos Group Inc.
+# Copyright (c) 2019-2024, The Khronos Group Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -17,7 +17,7 @@
 # This is a Docker container for OpenXR specification builds
 
 FROM ruby:3.1-bookworm as builder
-LABEL maintainer="Ryan Pavlik <ryan.pavlik@collabora.com>"
+LABEL maintainer="Rylie Pavlik <rylie.pavlik@collabora.com>"
 
 # Basic spec build and check packages
 RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \

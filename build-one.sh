@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2019-2023, The Khronos Group Inc.
+# Copyright 2019-2024, The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 # Pass a Dockerfile name and version (typically the year and month).

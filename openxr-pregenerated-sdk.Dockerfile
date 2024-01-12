@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2023, The Khronos Group Inc.
+# Copyright (c) 2019-2024, The Khronos Group Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -18,7 +18,7 @@
 # Intended for CI use.
 
 FROM ubuntu:20.04
-LABEL maintainer="Ryan Pavlik <ryan.pavlik@collabora.com>"
+LABEL maintainer="Rylie Pavlik <rylie.pavlik@collabora.com>"
 
 ENV LANG C.UTF-8
 
