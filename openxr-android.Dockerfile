@@ -29,7 +29,8 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
         unzip \
         wget \
         zip \
-    && apt-get clean
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set up user and group 1000:1000 for most common usage case
 RUN addgroup --gid 1000 --quiet openxr
@@ -37,25 +38,23 @@ RUN useradd --shell /bin/bash --create-home --no-log-init --uid 1000 --gid 1000 
 
 ### Android SDK components
 
-# This must match android.compileSdk in all Android build.gradle files
-ENV ANDROID_COMPILE_SDK=29
+# # This must match android.compileSdk in all Android build.gradle files
+# ENV ANDROID_COMPILE_SDK=33
 
-# This must match android.buildToolsVersion in all Android build.gradle files
-ENV ANDROID_BUILD_TOOLS=30.0.3
+# # This must match android.buildToolsVersion in all Android build.gradle files
+# ENV ANDROID_BUILD_TOOLS=34.0.0
 
-# look up on https://developer.android.com/studio/index.html#downloads when updating other versions
-ENV ANDROID_CLI_TOOLS=9477386
+# # look up on https://developer.android.com/studio/index.html#downloads when updating other versions
+# ENV ANDROID_CLI_TOOLS=10406996
 
-ENV ANDROID_NDK_VERSION=21.4.7075529
+ENV ANDROID_NDK_VERSION=23.2.8568313
 
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
 
 COPY install-android-sdk.sh /install-android-sdk.sh
 RUN /install-android-sdk.sh
 
-### Android NDK
-
-ENV ANDROID_NDK_HOME=/opt/android-sdk/ndk/${ANDROID_NDK_VERSION}
+ENV ANDROID_NDK_HOME=${ANDROID_SDK_ROOT}/ndk/${ANDROID_NDK_VERSION}
 
 # Switch to non-privileged user
 USER openxr
