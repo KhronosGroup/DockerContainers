@@ -51,6 +51,7 @@ run apt-get update -qq && \
         python3-pytest \
         python3-termcolor \
         tcsh \
+        dos2unix \
     && apt-get clean
 
 # Ruby gems providing asciidoctor and related plugins
