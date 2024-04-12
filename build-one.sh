@@ -23,9 +23,11 @@ REPO="khronosgroup/docker-images"
         OP=$1
         shift
     fi
+    BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
     [ -n "$CI" ] && echo "::group::$DOCKERFILE @ $VERSION"
     docker build "$@" . -f "$DOCKERFILE.Dockerfile" \
         --build-arg "VERSION=$VERSION" \
+        --label "org.opencontainers.image.created=$BUILD_DATE" \
         -t "$REPO:$DOCKERFILE" \
         -t "$REPO:$DOCKERFILE.$VERSION" \
         $EXTRA_DOCKER_ARGS
