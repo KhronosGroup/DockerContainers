@@ -49,11 +49,10 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 # Basic gems
-RUN gem install rake asciidoctor coderay json-schema rghost
+RUN gem install rake asciidoctor coderay json-schema rghost rouge hexapdf
 # Newer versions break our index customizer, haven't figured out the fix yet.
 RUN gem install asciidoctor-pdf --version 1.6.2
 # RUN MATHEMATICAL_SKIP_STRDUP=1 gem install asciidoctor-mathematical
-RUN gem install rouge
 
 # Basic pip packages
 RUN python3 -m pip install --break-system-packages --no-cache-dir codespell pypdf2 pdoc3 reuse jinja2-cli
