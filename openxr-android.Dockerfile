@@ -3,7 +3,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 FROM debian:bookworm
-LABEL maintainer="Rylie Pavlik <rylie.pavlik@collabora.com>"
+
+LABEL maintainer="Rylie Pavlik <rylie.pavlik@collabora.com>" \
+    org.opencontainers.image.authors="Rylie Pavlik <rylie.pavlik@collabora.com>" \
+    org.opencontainers.image.source=https://github.com/KhronosGroup/DockerContainers/blob/main/openxr-android.Dockerfile
 
 ENV LANG C.UTF-8
 

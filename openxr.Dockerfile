@@ -17,7 +17,6 @@
 # This is a Docker container for OpenXR specification builds
 
 FROM ruby:3.1-bookworm as builder
-LABEL maintainer="Rylie Pavlik <rylie.pavlik@collabora.com>"
 
 # Basic spec build and check packages
 RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
@@ -49,11 +48,10 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 # Basic gems
-RUN gem install rake asciidoctor coderay json-schema rghost
+RUN gem install rake asciidoctor coderay json-schema rghost rouge hexapdf
 # Newer versions break our index customizer, haven't figured out the fix yet.
 RUN gem install asciidoctor-pdf --version 1.6.2
 # RUN MATHEMATICAL_SKIP_STRDUP=1 gem install asciidoctor-mathematical
-RUN gem install rouge
 
 # Basic pip packages
 RUN python3 -m pip install --break-system-packages --no-cache-dir codespell pypdf2 pdoc3 reuse jinja2-cli
@@ -63,6 +61,10 @@ RUN python3 -m pip install --break-system-packages --no-cache-dir git+https://gi
 
 # Second stage: start a simpler image that doesn't have the dev packages
 FROM ruby:3.1-bookworm
+
+LABEL maintainer="Rylie Pavlik <rylie.pavlik@collabora.com>" \
+    org.opencontainers.image.authors="Rylie Pavlik <rylie.pavlik@collabora.com>" \
+    org.opencontainers.image.source=https://github.com/KhronosGroup/DockerContainers/blob/main/openxr.Dockerfile
 
 # Copy locally-installed gems and python packages
 COPY --from=builder /usr/local/ /usr/local/
