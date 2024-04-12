@@ -18,7 +18,10 @@
 # Intended for CI use.
 
 FROM ubuntu:20.04
-LABEL maintainer="Rylie Pavlik <rylie.pavlik@collabora.com>"
+
+LABEL maintainer="Rylie Pavlik <rylie.pavlik@collabora.com>" \
+    org.opencontainers.image.authors="Rylie Pavlik <rylie.pavlik@collabora.com>" \
+    org.opencontainers.image.source=https://github.com/KhronosGroup/DockerContainers/blob/main/openxr-pregenerated-sdk.Dockerfile
 
 ENV LANG C.UTF-8
 
