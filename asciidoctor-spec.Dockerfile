@@ -1,28 +1,34 @@
-# Copyright 2019-2024, The Khronos Group Inc.
+# Copyright 2019-2024 The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
-# This defines a Docker image for building a set of Khronos specifications
-# written using asciidoctor markup.
-# It contains the asciidoctor toolchain, and related plugins and tools.
-# Some projects may have additional toolchain requirements, and will use
-# Docker images layered on this one.
+# Defines a Docker image for building Khronos specifications written using
+# asciidoctor markup.
+# Contains the asciidoctor toolchain and related plugins and tools.
+# Specifications with additional toolchain requirements can build images
+# layered on this one.
 
-from ruby:3.1.2
+from ruby:3.3.3
 label maintainer="Jon Leech <devrel@oddhack.org>"
 
-# This adds the Node.js repository to the apt registry
-# nodejs is actually installed in the next step
+# Add the Node.js repository to the apt registry
 run curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
 
-# Debian packages
-# pandoc is for potential use with Markdown
-# reuse is for repository license verification
+# Debian packages.
+# First install is for Node / Python / Ruby.
+# Second is for native tools, and libraries needed for some Ruby gems.
 run apt-get update -qq && \
+    apt-get install -y -qq --no-install-recommends \
+        locales \
+        nodejs \
+        python3 \
+        python3-venv \
+        python3-pip && \
     apt-get install -y -qq --no-install-recommends \
         bash \
         bison  \
         build-essential \
         cmake \
+        dos2unix \
         flex \
         fonts-lyx \
         clang \
@@ -42,19 +48,44 @@ run apt-get update -qq && \
         libreadline-dev \
         libxml2-dev \
         ninja-build \
-        nodejs \
         pandoc \
         pdftk \
         poppler-utils \
-        python3 \
-        python3-pip \
-        python3-pytest \
-        python3-termcolor \
-        tcsh \
-        dos2unix \
     && apt-get clean
 
-# Ruby gems providing asciidoctor and related plugins
+# Ensure the proper locale is installed and used - not present in ruby image
+# See https://serverfault.com/questions/54591/how-to-install-change-locale-on-debian#54597
+run sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen && \
+    locale-gen && \
+    apt-get clean
+env LANG en_US.UTF-8
+
+# Python packages are installed in a virtual environment (venv).
+# Debian does not allow pip3 to install to the system Python directories.
+# It is possible to override this, but instead we use Docker commands to
+# manage a venv - see e.g.
+#   https://pythonspeed.com/articles/activate-virtualenv-dockerfile/
+# A user trying to create their own spec toolchain should instead
+#   source /path/to/venv/activate
+# which is equivalent to the commands below.
+
+env VIRTUAL_ENV=/opt/venv
+run python3 -m venv $VIRTUAL_ENV
+env PATH="$VIRTUAL_ENV/bin:$PATH"
+
+run pip3 install \
+    wheel setuptools \
+    codespell lxml meson networkx pygments pyparsing pytest termcolor \
+    reuse
+
+# JavaScript packages
+# escape-string-regexp is locked @2.0.0 because the current version is an
+# ES6 module requiring unobvious changes from 'require' to 'import'
+# There is an issue with more recent lunr versions, as well
+run npm install -g escape-string-regexp@2.0.0 he lunr@2.3.6
+env NODE_PATH /usr/lib/node_modules
+
+# Ruby packages providing asciidoctor and related plugins
 run gem install -N \
         asciidoctor \
         asciidoctor-diagram \
@@ -68,25 +99,3 @@ run gem install -N \
         pygments.rb \
         rouge \
         text-hyphen
-
-# Python packages
-# Something odd in the Docker build causes errors if setuptools isn't
-# installed first, although it should be a dependency of the other packages.
-run pip3 install wheel setuptools
-run pip3 install codespell networkx pygments reuse
-run pip3 install lxml meson
-
-# JavaScript packages
-# escape-string-regexp is locked @2.0.0 because the current version is an
-# ES6 module requiring unobvious changes from 'require' to 'import'
-# There is an issue with more recent lunr versions, as well
-run npm install -g escape-string-regexp@2.0.0 he lunr@2.3.6
-env NODE_PATH /usr/lib/node_modules
-
-# Ensure the proper locale is installed and used - not present in ruby image
-# See https://serverfault.com/questions/54591/how-to-install-change-locale-on-debian#54597
-run apt-get install -y -qq locales && \
-    sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen && \
-    locale-gen && \
-    apt-get clean
-env LANG en_US.UTF-8
