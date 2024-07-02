@@ -32,8 +32,8 @@ We have encountered problems with both gitlab and Github Actions CI not
 flushing cache when an updated image of the same name is pushed to
 dockerhub. While using different tags on every push is a possibility,
 another approach is to use the container SHA256 hash instead of the
-container name. This can be determined at container build time, or as
-follows:
+container name. This is printed out at the end of a build, or can be
+determined as follows:
 
 ```sh
 $ docker inspect --format='{{index .RepoDigests 0}}' khronosgroup/docker-images:asciidoctor-spec
@@ -43,3 +43,33 @@ khronosgroup/docker-images@sha256:1535246a0270e5a118b11ba121ac3c08849782d27afcac
 Using the last line as the image name in CI will pull that specific hash
 instead of whatever the currently cached version of the underlying image
 name is. This works in both gitlab and Github Actions.
+
+## Cleaning the Docker Build and Image Caches
+
+Docker builds can consume many GB of storage very quickly, and old
+containers and images you are no longer using can do so as well.
+You can get an idea how much is used via
+
+```sh
+docker system df
+```
+
+See https://depot.dev/blog/docker-clear-cache for suggestions on cleaning up
+after builds.
+In particular, these commands are often useful:
+
+```sh
+# Clean the build cache
+docker buildx prune
+```
+
+```sh
+# List images, including their IDs
+docker image ls -a --digests
+```
+
+```sh
+# Remove specific images; adding '--force' may be useful if there are
+# persistent images and you no longer know what they're associated with.
+docker image rmi <ID>
+```
