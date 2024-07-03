@@ -99,3 +99,7 @@ run gem install -N \
         pygments.rb \
         rouge \
         text-hyphen
+
+# Set HOME so that when running under a different UID, temp files can be
+# written there.
+env HOME=/tmp
