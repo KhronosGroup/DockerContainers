@@ -42,12 +42,15 @@ REPO="khronosgroup/docker-images"
         echo
         echo "** To refer to this image precisely, use:"
         echo "   $REPO:$DOCKERFILE.$VERSION@$HASH"
+
+        echo "After pushing an image, it is a good idea to clean up build cache and"
+        echo "unused images using commands like 'docker buildx prune',"
+        echo "'docker image ls -a --digests', and 'docker image rmi'"
     else
         echo
         echo "** Not pushing, so no SHA256 manifest available. Until you push this image, refer to it as:"
         echo "   $REPO:$DOCKERFILE.$VERSION"
     fi
-
 
     [ -n "$CI" ] && echo "::endgroup::"
 )
