@@ -72,7 +72,7 @@ COPY --from=builder /usr/local/ /usr/local/
 # Runtime-required packages
 RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     env DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -qq \
-    clang-format-13 \
+    clang-format-14 \
     fonts-lyx \
     ghostscript \
     git \
