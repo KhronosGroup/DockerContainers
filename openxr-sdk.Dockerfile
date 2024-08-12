@@ -35,7 +35,6 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     build-essential \
     ca-certificates \
     clang-10 \
-    clang-format-10 \
     cmake \
     git \
     git-lfs \
