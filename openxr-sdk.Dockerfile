@@ -90,7 +90,8 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     libxxf86vm-dev:i386 \
     linux-libc-dev:i386 \
     mesa-common-dev:i386 \
-    && apt-get clean
+    && env DEBIAN_FRONTEND=noninteractive apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy in the toolchain file
 COPY i386.cmake /i386.cmake
