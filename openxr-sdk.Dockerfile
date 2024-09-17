@@ -31,6 +31,7 @@ RUN dpkg --add-architecture i386
 # Runtime-required packages
 RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     env DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -qq \
+    asciidoctor \
     apt-transport-https \
     build-essential \
     ca-certificates \
