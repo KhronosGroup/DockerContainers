@@ -55,9 +55,11 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     wget \
     gcc-multilib \
     g++-multilib \
-    linux-libc-dev:i386 \
+    libelf-dev:i386 \
     libgl1-mesa-dev:i386 \
     libvulkan-dev:i386 \
+    libwayland-dev:i386 \
+    libx11-dev:i386 \
     libx11-xcb-dev:i386 \
     libxcb-dri2-0-dev:i386 \
     libxcb-glx0-dev:i386 \
@@ -66,6 +68,10 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     libxcb-randr0-dev:i386 \
     libxrandr-dev:i386 \
     libxxf86vm-dev:i386 \
+    linux-libc-dev:i386 \
     mesa-common-dev:i386 \
     && env DEBIAN_FRONTEND=noninteractive apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Copy in the toolchain file
+COPY i386.cmake /i386.cmake
