@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright 2022-2024, Collabora, Ltd. and the Monado contributors
+# Copyright 2022-2025, Collabora, Ltd. and the Monado contributors
 #
 # SPDX-License-Identifier: BSL-1.0
 
@@ -8,8 +8,8 @@
 
 set -eo pipefail
 # These normally come from the environment but we have defaults
-ANDROID_CLI_TOOLS=${ANDROID_CLI_TOOLS:-10406996}
-ANDROID_COMPILE_SDK=${ANDROID_COMPILE_SDK:-33}
+ANDROID_CLI_TOOLS=${ANDROID_CLI_TOOLS:-11076708}
+ANDROID_COMPILE_SDK=${ANDROID_COMPILE_SDK:-34}
 ANDROID_BUILD_TOOLS=${ANDROID_BUILD_TOOLS:-34.0.0}
 ANDROID_NDK_VERSION=${ANDROID_NDK_VERSION:-23.2.8568313}
 ANDROID_CMAKE_VERSION=${ANDROID_CMAKE_VERSION:-3.22.1}

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2019-2024, The Khronos Group Inc.
+# Copyright 2019-2025, The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 set -e
@@ -17,5 +17,5 @@ set -e
     ./build-one.sh openxr 20240924 "$@"
     ./build-one.sh openxr-sdk 20240924 "$@"
     ./build-one.sh openxr-pregenerated-sdk 20240924 "$@"
-    ./build-one.sh openxr-android 20240924 "$@"
+    ./build-one.sh openxr-android 20250121 "$@"
 )
