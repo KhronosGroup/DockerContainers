@@ -1,4 +1,4 @@
-# Copyright (c) 2019-2024, The Khronos Group Inc.
+# Copyright (c) 2019-2025, The Khronos Group Inc.
 #
 # SPDX-License-Identifier: Apache-2.0
 
@@ -64,7 +64,7 @@ USER openxr
 WORKDIR /home/openxr
 
 # Cache the gradle wrapper in the image
-ENV CACHED_GRADLE_WRAPPER_VERSION=7.5
+ENV CACHED_GRADLE_WRAPPER_VERSION=8.5
 RUN mkdir -p temp_proj && \
     cd temp_proj && \
     gradle -Porg.gradle.daemon=false init && \
