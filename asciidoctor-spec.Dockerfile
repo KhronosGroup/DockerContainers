@@ -7,7 +7,7 @@
 # Specifications with additional toolchain requirements can build images
 # layered on this one.
 
-from ruby:3.3.3
+from ruby:3.3.4
 label maintainer="Jon Leech <devrel@oddhack.org>"
 
 # Add the Node.js repository to the apt registry
@@ -27,6 +27,7 @@ run apt-get update -qq && \
         bash \
         bison  \
         build-essential \
+        clang-format \
         cmake \
         dos2unix \
         flex \
@@ -51,6 +52,8 @@ run apt-get update -qq && \
         pandoc \
         pdftk \
         poppler-utils \
+        unzip \
+        zip \
     && apt-get clean
 
 # Ensure the proper locale is installed and used - not present in ruby image
@@ -58,7 +61,7 @@ run apt-get update -qq && \
 run sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen && \
     locale-gen && \
     apt-get clean
-env LANG en_US.UTF-8
+env LANG=en_US.UTF-8
 
 # Python packages are installed in a virtual environment (venv).
 # Debian does not allow pip3 to install to the system Python directories.
@@ -83,7 +86,7 @@ run pip3 install \
 # ES6 module requiring unobvious changes from 'require' to 'import'
 # There is an issue with more recent lunr versions, as well
 run npm install -g escape-string-regexp@2.0.0 he lunr@2.3.6
-env NODE_PATH /usr/lib/node_modules
+env NODE_PATH=/usr/lib/node_modules
 
 # Ruby packages providing asciidoctor and related plugins
 run gem install -N \
