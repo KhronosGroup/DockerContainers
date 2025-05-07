@@ -7,7 +7,7 @@
 # Specifications with additional toolchain requirements can build images
 # layered on this one.
 
-from ruby:3.3.4
+from ruby:3.4.3
 label maintainer="Jon Leech <devrel@oddhack.org>"
 
 # Add the Node.js repository to the apt registry
@@ -47,6 +47,7 @@ run apt-get update -qq && \
         libgdk-pixbuf2.0-dev \
         libpango1.0-dev \
         libreadline-dev \
+        libtidy5deb1 \
         libxml2-dev \
         ninja-build \
         pandoc \
@@ -79,7 +80,7 @@ env PATH="$VIRTUAL_ENV/bin:$PATH"
 run pip3 install \
     wheel setuptools \
     codespell lxml meson networkx pygments pyparsing pytest termcolor \
-    reuse
+    reuse utidylib
 
 # JavaScript packages
 # escape-string-regexp is locked @2.0.0 because the current version is an
