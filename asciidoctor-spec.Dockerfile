@@ -80,7 +80,7 @@ env PATH="$VIRTUAL_ENV/bin:$PATH"
 run pip3 install \
     wheel setuptools \
     codespell lxml meson networkx pygments pyparsing pytest termcolor \
-    reuse utidylib
+    reuse utidylib requests beautifulsoup4
 
 # JavaScript packages
 # escape-string-regexp is locked @2.0.0 because the current version is an
