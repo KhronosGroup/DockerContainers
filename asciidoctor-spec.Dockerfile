@@ -1,4 +1,4 @@
-# Copyright 2019-2024 The Khronos Group Inc.
+# Copyright 2019-2025 The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 # Defines a Docker image for building Khronos specifications written using
@@ -7,7 +7,7 @@
 # Specifications with additional toolchain requirements can build images
 # layered on this one.
 
-from ruby:3.4.3
+from ruby:3.4
 label maintainer="Jon Leech <devrel@oddhack.org>"
 
 # Add the Node.js repository to the apt registry
@@ -53,6 +53,7 @@ run apt-get update -qq && \
         pandoc \
         pdftk \
         poppler-utils \
+        silversearcher-ag \
         unzip \
         zip \
     && apt-get clean
