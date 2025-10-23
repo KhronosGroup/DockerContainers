@@ -18,7 +18,8 @@
 
 FROM ruby:3.1-bookworm as builder
 
-# Basic spec build and check packages
+# Build environment for ruby and python packages
+# You probably want to add packages to the **second** list.
 RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     env DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -qq \
     bison \
@@ -44,9 +45,11 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     python3-requests \
     python3-setuptools \
     python3-wheel \
-    wget && \
+    wget \
+    && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
 # Basic gems
 RUN gem install rake asciidoctor coderay json-schema rghost rouge hexapdf
 # Newer versions break our index customizer, haven't figured out the fix yet.
@@ -82,7 +85,9 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     jing \
     libpango1.0-0 \
     libxml2-utils \
+    optipng \
     pdftk \
+    pngquant \
     poppler-utils \
     python3 \
     python3-attr \
@@ -96,7 +101,9 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     python3-venv \
     trang \
     wget \
-    xmlstarlet && \
+    xmlstarlet \
+    zopfli \
+    && \
     apt-get clean
 
 # Add the optional entrypoint to the image
