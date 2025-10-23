@@ -14,7 +14,7 @@ set -e
     ./build-one.sh vulkan-docs-base 202206 "$@"
     ./build-one.sh vulkan-docs 202206 "$@"
     ./build-one.sh rust 202312 "$@"
-    ./build-one.sh openxr 20240924 "$@"
+    ./build-one.sh openxr 20251023 "$@"
     ./build-one.sh openxr-sdk 20250603 "$@"
     ./build-one.sh openxr-pregenerated-sdk 20240924 "$@"
     ./build-one.sh openxr-android 20250121 "$@"
