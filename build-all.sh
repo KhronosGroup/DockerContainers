@@ -18,4 +18,5 @@ set -e
     ./build-one.sh openxr-sdk 20250603 "$@"
     ./build-one.sh openxr-pregenerated-sdk 20240924 "$@"
     ./build-one.sh openxr-android 20250121 "$@"
+    ./build-one.sh openxr-avd 20251027 "$@"
 )
