@@ -11,7 +11,7 @@ from ruby:3.4
 label maintainer="Jon Leech <devrel@oddhack.org>"
 
 # Add the Node.js repository to the apt registry
-run curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
+run curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 
 # Debian packages.
 # First install is for Node / Python / Ruby.
@@ -28,6 +28,7 @@ run apt-get update -qq && \
         bison  \
         build-essential \
         clang-format \
+        clang-format-19 \
         cmake \
         dos2unix \
         flex \
@@ -44,10 +45,10 @@ run apt-get update -qq && \
         libbatik-java \
         libcairo2-dev \
         libffi-dev \
-        libgdk-pixbuf2.0-dev \
+        libgdk-pixbuf-2.0-dev \
         libpango1.0-dev \
         libreadline-dev \
-        libtidy5deb1 \
+        libtidy-dev \
         libxml2-dev \
         ninja-build \
         pandoc \
@@ -56,7 +57,8 @@ run apt-get update -qq && \
         silversearcher-ag \
         unzip \
         zip \
-    && apt-get clean
+    && apt-get clean \
+    && apt autoremove --yes
 
 # Ensure the proper locale is installed and used - not present in ruby image
 # See https://serverfault.com/questions/54591/how-to-install-change-locale-on-debian#54597
