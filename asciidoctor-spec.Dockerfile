@@ -1,4 +1,4 @@
-# Copyright 2019-2025 The Khronos Group Inc.
+# Copyright 2019-2026 The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 # Defines a Docker image for building Khronos specifications written using
@@ -57,6 +57,12 @@ run apt-get update -qq && \
         silversearcher-ag \
         unzip \
         zip \
+    && apt-get install -y -qq --no-install-recommends \
+        libgl-dev \
+        libxcursor-dev \
+        libxi-dev \
+        libxinerama-dev \
+        libxrandr-dev \
     && apt-get clean \
     && apt autoremove --yes
 
