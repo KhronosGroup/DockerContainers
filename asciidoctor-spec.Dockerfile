@@ -16,6 +16,8 @@ run curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 # Debian packages.
 # First install is for Node / Python / Ruby.
 # Second is for native tools, and libraries needed for some Ruby gems.
+# The apt-mark is because autoremove started removing a manually installed
+# package for unknown reasons.
 run apt-get update -qq && \
     apt-get install -y -qq --no-install-recommends \
         locales \
@@ -54,6 +56,7 @@ run apt-get update -qq && \
         pandoc \
         pdftk \
         poppler-utils \
+        ripgrep \
         silversearcher-ag \
         unzip \
         zip \
@@ -64,6 +67,7 @@ run apt-get update -qq && \
         libxinerama-dev \
         libxrandr-dev \
     && apt-get clean \
+    && apt-mark manual libgdk-pixbuf-2.0-dev \
     && apt autoremove --yes
 
 # Ensure the proper locale is installed and used - not present in ruby image
