@@ -7,7 +7,7 @@
 # Specifications with additional toolchain requirements can build images
 # layered on this one.
 
-from ruby:3.4
+from docker.io/library/ruby:3.4
 label maintainer="Jon Leech <devrel@oddhack.org>"
 
 # Add the Node.js repository to the apt registry
