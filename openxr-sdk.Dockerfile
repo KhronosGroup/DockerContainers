@@ -40,6 +40,7 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     cmake \
     git \
     git-lfs \
+    glslang-tools \
     gnupg \
     libegl1-mesa-dev \
     libgl1-mesa-dev \
