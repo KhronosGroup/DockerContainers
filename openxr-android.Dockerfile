@@ -32,7 +32,9 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
         unzip \
         wget \
         zip \
-    && apt-get clean && \
+        && \
+    env DEBIAN_FRONTEND=noninteractive apt-get full-upgrade -yy && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Set up user and group 1000:1000 for most common usage case
