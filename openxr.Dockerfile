@@ -62,7 +62,7 @@ RUN python3 -m pip install --break-system-packages "pip @ https://files.pythonho
     && rm -rf .cache/
 
 # Basic pip packages
-RUN python3 -m pip install --break-system-packages --no-cache-dir codespell pypdf2 pdoc3 reuse jinja2-cli
+RUN python3 -m pip install --break-system-packages --no-cache-dir codespell pypdf2 pdoc3 reuse jinja2-cli proclamation
 
 # pdf-diff pip package
 RUN python3 -m pip install --break-system-packages --no-cache-dir git+https://github.com/rpavlik/pdf-diff
@@ -124,7 +124,7 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
 
 # Install latest PrettyRegistryXML in opt and link into path
 RUN mkdir -p /opt/PrettyRegistryXML && \
-    wget https://github.com/rpavlik/PrettyRegistryXml/releases/download/v3.8.0/PrettyRegistryXml-Linux-3.8.0.7z -O /opt/PrettyRegistryXML/release.7z && \
+    wget https://github.com/rpavlik/PrettyRegistryXml/releases/download/v4.0.0/PrettyRegistryXml-Linux-4.0.0.7z -O /opt/PrettyRegistryXML/release.7z && \
     7zz e -o/opt/PrettyRegistryXML -spe /opt/PrettyRegistryXML/release.7z && \
     ln -s /opt/PrettyRegistryXML/PrettyRegistryXml.OpenXR /opt/PrettyRegistryXML/PrettyRegistryXml.Vulkan /usr/local/bin
 
