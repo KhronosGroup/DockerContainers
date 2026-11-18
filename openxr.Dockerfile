@@ -58,7 +58,8 @@ RUN gem install asciidoctor-pdf --version 1.6.2
 
 # Ensure the outdated certificates aren't around.
 RUN python3 -m pip install --break-system-packages "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70" \
-    && pip install  --break-system-packages --upgrade certifi
+    && pip install  --break-system-packages --upgrade certifi \
+    && rm -rf .cache/
 
 # Basic pip packages
 RUN python3 -m pip install --break-system-packages --no-cache-dir codespell pypdf2 pdoc3 reuse jinja2-cli
@@ -129,7 +130,8 @@ RUN mkdir -p /opt/PrettyRegistryXML && \
 
 # Ensure the outdated certificates aren't around.
 RUN python3 -m pip install --break-system-packages "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70" \
-    && pip install  --break-system-packages --upgrade certifi
+    && pip install  --break-system-packages --upgrade certifi \
+    && rm -rf .cache/
 
 # Add the optional entrypoint to the image
 COPY entrypoint.openxr.sh /root/entrypoint.openxr.sh
