@@ -62,7 +62,7 @@ RUN python3 -m pip install --break-system-packages "pip @ https://files.pythonho
     && rm -rf .cache/
 
 # Basic pip packages
-RUN python3 -m pip install --break-system-packages --no-cache-dir codespell pypdf2 pdoc3 reuse jinja2-cli
+RUN python3 -m pip install --break-system-packages --no-cache-dir codespell pypdf2 pdoc3 reuse jinja2-cli proclamation
 
 # pdf-diff pip package
 RUN python3 -m pip install --break-system-packages --no-cache-dir git+https://github.com/rpavlik/pdf-diff
