@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2019-2024, The Khronos Group Inc.
+# Copyright 2019-2026 The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 # Pass a Dockerfile name and version (typically the year and month).
@@ -25,11 +25,13 @@ REPO="khronosgroup/docker-images"
     fi
     BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
     [ -n "$CI" ] && echo "::group::$DOCKERFILE @ $VERSION"
+    # Use '--network=host' to work around DNS resolution in some contexts
     docker build "$@" . -f "$DOCKERFILE.Dockerfile" \
         --build-arg "VERSION=$VERSION" \
         --label "org.opencontainers.image.created=$BUILD_DATE" \
         -t "$REPO:$DOCKERFILE" \
         -t "$REPO:$DOCKERFILE.$VERSION" \
+        --network=host \
         $EXTRA_DOCKER_ARGS
     if [ "$OP" == "push" ]; then
         docker push "$REPO:$DOCKERFILE"
@@ -42,15 +44,18 @@ REPO="khronosgroup/docker-images"
         echo
         echo "** To refer to this image precisely, use:"
         echo "   $REPO:$DOCKERFILE.$VERSION@$HASH"
-
-        echo "After pushing an image, it is a good idea to clean up build cache and"
-        echo "unused images using commands like 'docker buildx prune',"
-        echo "'docker image ls -a --digests', and 'docker image rmi'"
     else
         echo
         echo "** Not pushing, so no SHA256 manifest available. Until you push this image, refer to it as:"
         echo "   $REPO:$DOCKERFILE.$VERSION"
     fi
+
+    echo "After building an image, it is a good idea to clean up build cache"
+    echo "and unused images using commands like:"
+    echo "    docker buildx prune"
+    echo "    docker image ls -a --digests"
+    echo "    docker image rmi"
+
 
     [ -n "$CI" ] && echo "::endgroup::"
 )
