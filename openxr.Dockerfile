@@ -16,7 +16,7 @@
 
 # This is a Docker container for OpenXR specification builds
 
-FROM ruby:3.1-bookworm as builder
+FROM ruby:3.4-bookworm as builder
 
 # Build environment for ruby and python packages
 # You probably want to add packages to the **second** list.
@@ -56,6 +56,11 @@ RUN gem install rake asciidoctor coderay json-schema rghost rouge hexapdf
 RUN gem install asciidoctor-pdf --version 1.6.2
 # RUN MATHEMATICAL_SKIP_STRDUP=1 gem install asciidoctor-mathematical
 
+# Ensure the outdated certificates aren't around.
+RUN python3 -m pip install --break-system-packages "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70" \
+    && pip install  --break-system-packages --upgrade certifi \
+    && rm -rf .cache/
+
 # Basic pip packages
 RUN python3 -m pip install --break-system-packages --no-cache-dir codespell pypdf2 pdoc3 reuse jinja2-cli
 
@@ -63,7 +68,7 @@ RUN python3 -m pip install --break-system-packages --no-cache-dir codespell pypd
 RUN python3 -m pip install --break-system-packages --no-cache-dir git+https://github.com/rpavlik/pdf-diff
 
 # Second stage: start a simpler image that doesn't have the dev packages
-FROM ruby:3.1-bookworm
+FROM ruby:3.4-bookworm
 
 LABEL maintainer="Rylie Pavlik <rylie.pavlik@collabora.com>" \
     org.opencontainers.image.authors="Rylie Pavlik <rylie.pavlik@collabora.com>" \
@@ -104,7 +109,29 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     xmlstarlet \
     zopfli \
     && \
+    apt-get full-upgrade -yy && \
     apt-get clean
+
+# Install .NET 8 (For PrettyRegistryXML)
+RUN wget https://packages.microsoft.com/keys/microsoft.asc -O - | gpg --dearmor > /usr/share/keyrings/microsoft-prod.gpg
+RUN wget https://packages.microsoft.com/config/debian/12/prod.list -O /etc/apt/sources.list.d/microsoft.list
+RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
+    env DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -qq \
+    dotnet-runtime-8.0 \
+    7zip \
+    && \
+    apt-get clean
+
+# Install latest PrettyRegistryXML in opt and link into path
+RUN mkdir -p /opt/PrettyRegistryXML && \
+    wget https://github.com/rpavlik/PrettyRegistryXml/releases/download/v3.8.0/PrettyRegistryXml-Linux-3.8.0.7z -O /opt/PrettyRegistryXML/release.7z && \
+    7zz e -o/opt/PrettyRegistryXML -spe /opt/PrettyRegistryXML/release.7z && \
+    ln -s /opt/PrettyRegistryXML/PrettyRegistryXml.OpenXR /opt/PrettyRegistryXML/PrettyRegistryXml.Vulkan /usr/local/bin
+
+# Ensure the outdated certificates aren't around.
+RUN python3 -m pip install --break-system-packages "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70" \
+    && pip install  --break-system-packages --upgrade certifi \
+    && rm -rf .cache/
 
 # Add the optional entrypoint to the image
 COPY entrypoint.openxr.sh /root/entrypoint.openxr.sh

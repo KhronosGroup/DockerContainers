@@ -92,8 +92,20 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get update -qq && \
     libxxf86vm-dev:i386 \
     linux-libc-dev:i386 \
     mesa-common-dev:i386 \
+    && env DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -yy \
     && env DEBIAN_FRONTEND=noninteractive apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy in the toolchain file
 COPY i386.cmake /i386.cmake
+
+# Manually drop eMudhra certs
+RUN sed -i \
+  -e 's|^mozilla/emSign_ECC_Root_CA_-_G3.crt|!&|' \
+  -e 's|^mozilla/Comodo_AAA_Services_root.crt|!&|' \
+  /etc/ca-certificates.conf && update-ca-certificates
+
+# Ensure the outdated certificates aren't around.
+RUN python3 -m pip install "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70" \
+    && pip install --upgrade certifi \
+    && rm -rf .cache/

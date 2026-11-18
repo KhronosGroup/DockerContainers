@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2019-2025, The Khronos Group Inc.
+# Copyright 2019-2026, The Khronos Group Inc.
 # SPDX-License-Identifier: Apache-2.0
 
 set -e
@@ -14,9 +14,9 @@ set -e
     ./build-one.sh vulkan-docs-base 202206 "$@"
     ./build-one.sh vulkan-docs 202206 "$@"
     ./build-one.sh rust 202312 "$@"
-    ./build-one.sh openxr 20251023 "$@"
-    ./build-one.sh openxr-sdk 20260327 "$@"
-    ./build-one.sh openxr-pregenerated-sdk 20240924 "$@"
-    ./build-one.sh openxr-android 20250121 "$@"
+    ./build-one.sh openxr 20261118.1 "$@"
+    ./build-one.sh openxr-sdk 20261026.1 "$@"
+    ./build-one.sh openxr-pregenerated-sdk 20261026 "$@"
+    ./build-one.sh openxr-android 20261026 "$@"
     ./build-one.sh openxr-avd 20251027 "$@"
 )
